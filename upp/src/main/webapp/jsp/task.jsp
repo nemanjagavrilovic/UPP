@@ -8,17 +8,30 @@
 	crossorigin="anonymous">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<script type="text/javascript"
-	src="${pageContext.request.contextPath}/js/login.js"> </script>
-	<script type="text/javascript"
-	src="${pageContext.request.contextPath}/js/generateFormFields.js"> </script>
-	
+	src="${pageContext.request.contextPath}/js/task.js"> </script>
 	<script type="text/javascript"
 	src="${pageContext.request.contextPath}/js/jquery.min.js"> </script>
 	</head>
 	<body>
 		<div id="content">
-		
+		<c:forEach var="field" items="${formFields}" varStatus="loop">
+				<c:choose>
+				    <c:when test="${field.type.name == 'string'}">
+				    	<c:choose>
+				    		<c:when test="${field.id == 'password'}">
+		 						${field.label}<input type="password" id="${field.id}"><br/>
+				    		</c:when>
+				    		<c:otherwise>
+		    					${field.label}<input type="text" id="${field.id}"><br/>
+				    		</c:otherwise>
+				    	</c:choose>
+				        <br />
+				    </c:when>    
+				    <c:otherwise>
+				      <br />
+				    </c:otherwise>
+				</c:choose>
+			</c:forEach>
 		</div>
-		<a href="../jsp/registration.jsp">Sign in</a>
 	</body>
 </html>

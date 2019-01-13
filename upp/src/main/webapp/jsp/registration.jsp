@@ -8,7 +8,7 @@
 	crossorigin="anonymous">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<script type="text/javascript"
-	src="${pageContext.request.contextPath}/js/login.js"> </script>
+	src="${pageContext.request.contextPath}/js/registration.js"> </script>
 	<script type="text/javascript"
 	src="${pageContext.request.contextPath}/js/generateFormFields.js"> </script>
 	
@@ -19,6 +19,5 @@
 		<div id="content">
 		
 		</div>
-		<a href="../jsp/registration.jsp">Sign in</a>
 	</body>
 </html>

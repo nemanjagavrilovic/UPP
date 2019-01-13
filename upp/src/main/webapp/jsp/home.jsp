@@ -8,17 +8,20 @@
 	crossorigin="anonymous">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<script type="text/javascript"
-	src="${pageContext.request.contextPath}/js/login.js"> </script>
-	<script type="text/javascript"
-	src="${pageContext.request.contextPath}/js/generateFormFields.js"> </script>
-	
+	src="${pageContext.request.contextPath}/js/home.js"> </script>
 	<script type="text/javascript"
 	src="${pageContext.request.contextPath}/js/jquery.min.js"> </script>
 	</head>
 	<body>
+	
 		<div id="content">
-		
+		<ul>
+			<c:forEach var="task" items="${tasks}" varStatus="loop">
+				<li>
+					<a href="../../task/${task.taskId}">${task.name}</a>
+				</li>
+			</c:forEach>
+			</ul>
 		</div>
-		<a href="../jsp/registration.jsp">Sign in</a>
 	</body>
 </html>
