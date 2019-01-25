@@ -1,17 +1,3 @@
-var formFields;
-
-window.onload = function () {
-	$.ajax({
-		url: '/login/',
-		type: 'GET',
-		success:function(response) {
-			generateForm(response.formFields,"content");
-			$("#content").append('<input id="login" type="button" value="Login" onclick=login("'+response.taskId+'")>');
-			formFields = response.formFields;
-		}
-	})
-}
-
 function generateForm (fields,div) {
 
 	for(i=0; i<fields.length; i++) {
@@ -24,6 +10,23 @@ function generateForm (fields,div) {
 		}
 	}
 }
+$(document).on('click','#login',function(){
+	data = JSON.stringify({
+		username: $("#username").val(),
+		password: $("#password").val()
+	})
+	$.ajax({
+		url:'/login/login',
+		type:'POST',
+		data:data,
+		contentType:'application/json',
+		success:function(response){
+			if(response != "") {
+				window.top.location = '../jsp/home.jsp';
+			}
+		}
+	})
+})
 function login(taskId) {
 	var data = JSON.stringify(getFormFields(formFields));
 	$.ajax({
@@ -40,7 +43,7 @@ function login(taskId) {
 				data : JSON.stringify(getUsername(getFormFields(formFields))),
 				success : function(response) {
 					if( response != "") {
-						window.top.location = '../task/tasks';
+						window.top.location = '../magazines/';
 					}
 				}
 			})

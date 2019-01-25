@@ -5,6 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.camunda.bpm.engine.FormService;
+import org.camunda.bpm.engine.IdentityService;
 import org.camunda.bpm.engine.RuntimeService;
 import org.camunda.bpm.engine.TaskService;
 import org.camunda.bpm.engine.form.FormField;
@@ -27,10 +28,13 @@ public class RegistrationController {
 	private RuntimeService runtimeService;
 
 	@Autowired
-	TaskService taskService;
+	private TaskService taskService;
 
 	@Autowired
-	FormService formService;
+	private FormService formService;
+	
+	@Autowired
+	private IdentityService identityService;
 	
 	@RequestMapping(value="/",method=RequestMethod.GET)
 	public @ResponseBody FormFieldsDto registration(HttpServletRequest request) {

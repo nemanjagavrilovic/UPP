@@ -2,8 +2,10 @@ package com.upp.upp.camundaService;
 
 import java.util.List;
 
+import org.camunda.bpm.engine.IdentityService;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
+import org.camunda.bpm.engine.impl.persistence.entity.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +18,9 @@ public class CheckUserRegistration implements JavaDelegate {
 
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
+	private IdentityService identityService;
 	
 	@Override
 	public void execute(DelegateExecution execution) throws Exception {
@@ -30,8 +35,13 @@ public class CheckUserRegistration implements JavaDelegate {
 				password = dto.getFieldValue();
 		}
 		User user = userRepository.findByUsername(username);
+		
 		if( user == null ) {
 			user = userRepository.save(new User(username,password));
+
+	        org.camunda.bpm.engine.identity.User newUser = identityService.newUser(user.getUsername());
+	        newUser.setPassword(password);
+			identityService.saveUser(newUser);
 			execution.setVariable("registeredUser", user);
 		}else {
 			execution.setVariable("registeredUser", null);

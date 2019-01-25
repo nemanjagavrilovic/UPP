@@ -24,6 +24,8 @@ function registrate(taskId) {
 		success:function(response) {
 			if(response != "")
 				$("#registrate").attr("onclick",'registrate("'+response.taskId+'")');
+			else
+				window.top.location = '../jsp/login.jsp';
 		}
 	});
 }

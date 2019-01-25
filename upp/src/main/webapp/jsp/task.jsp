@@ -14,6 +14,7 @@
 	</head>
 	<body>
 		<div id="content">
+		
 		<c:forEach var="field" items="${formFields}" varStatus="loop">
 				<c:choose>
 				    <c:when test="${field.type.name == 'string'}">

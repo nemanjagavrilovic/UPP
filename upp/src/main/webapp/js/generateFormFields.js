@@ -1,7 +1,6 @@
 function getFormFields(formFields) {
 	var data = new Array();
 	formFields.forEach(element => {
-		console.log(element);
 		data.push({fieldId : element.id, fieldValue : $("#"+element.id).val()});
 	});
 	

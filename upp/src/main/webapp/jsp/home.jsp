@@ -23,5 +23,6 @@
 			</c:forEach>
 			</ul>
 		</div>
+		<a href="../task/startProcess/">Add article</a>
 	</body>
 </html>

@@ -7,10 +7,12 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.camunda.bpm.engine.FormService;
+import org.camunda.bpm.engine.IdentityService;
 import org.camunda.bpm.engine.RuntimeService;
 import org.camunda.bpm.engine.TaskService;
 import org.camunda.bpm.engine.form.FormField;
 import org.camunda.bpm.engine.form.TaskFormData;
+import org.camunda.bpm.engine.impl.identity.Authentication;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.camunda.bpm.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,12 +24,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.upp.upp.converter.TaskToTaskDtoConverter;
 import com.upp.upp.model.FormSubmissionDto;
 import com.upp.upp.model.TaskDto;
-import com.upp.upp.model.User;
+import com.upp.upp.service.MagazineService;
 
 @Controller
 @RequestMapping("/task")
@@ -45,6 +48,31 @@ public class TaskController {
 	@Autowired
 	private TaskToTaskDtoConverter taskToTaskDtoConverter;
 	
+	@Autowired
+	private IdentityService identityService;
+	
+	@Autowired
+	private MagazineService magazineService;
+	
+	@RequestMapping(value = "/startProcess", method = RequestMethod.GET)
+	private String  startProcess(HttpServletRequest request) {
+		
+		String user = (String) request.getSession().getAttribute("loggedUser");
+		Authentication currentAuthentication = null;
+		currentAuthentication = new Authentication(user,new ArrayList<String>());
+		identityService.setAuthentication(currentAuthentication);
+
+		ProcessInstance pi = runtimeService.startProcessInstanceByKey("Process_1");
+		Task task = taskService.createTaskQuery().processInstanceId(pi.getId()).list().get(0);
+		TaskFormData tfd = formService.getTaskFormData(task.getId());
+		List<FormField> properties = tfd.getFormFields();
+		for (FormField fp : properties) {
+			System.out.println(fp.getId() + fp.getType());
+		}
+		request.getSession().setAttribute("task", new TaskDto(task.getId(), task.getName(), task.getAssignee()));
+		request.getSession().setAttribute("magazines", magazineService.findAll());
+		return "redirect:/jsp/chooseMagazine.jsp";
+	}
 	@PostMapping(path = "/complete/{taskId}", produces = "application/json")
 	public @ResponseBody ResponseEntity<List<TaskDto>> complete(@PathVariable String taskId) {
 		Task taskTemp = taskService.createTaskQuery().taskId(taskId).singleResult();
@@ -92,7 +120,7 @@ public class TaskController {
         return new TaskDto(task.getId(), task.getName(), task.getAssignee());
     }
 	
-	@GetMapping(path = "/{taskId}", produces = "application/json")
+	@RequestMapping(path = "/{taskId}", produces = "application/json", method=RequestMethod.GET)
 	public String  getTask(@PathVariable ("taskId") String taskId,
 												HttpServletRequest request) {
 		Task task =  taskService.createTaskQuery().taskId(taskId).list().get(0);
@@ -105,7 +133,7 @@ public class TaskController {
 		return "redirect:/jsp/task.jsp";
 	}
 	
-	@GetMapping(path = "/tasks", produces = "application/json")
+	@RequestMapping(path = "/tasks", produces = "application/json", method=RequestMethod.GET)
 	public String getUserTasks(HttpServletRequest request) {
 		String user = (String)request.getSession().getAttribute("loggedUser");
 
