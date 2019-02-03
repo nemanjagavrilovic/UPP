@@ -1,5 +1,11 @@
-insert into magazine (id, name)
+insert into magazine (id, title)
   values (1, 'Computer World');
+
+insert into magazine (id, title)
+  values (2, 'Galileu');
+
+insert into magazine (id, title)
+  values (3, 'EuroScientist');
 
 insert into user (id,password,username)
 	values (1,'1234','admin');

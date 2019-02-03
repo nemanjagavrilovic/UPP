@@ -8,23 +8,20 @@
 	crossorigin="anonymous">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<script type="text/javascript"
-	src="${pageContext.request.contextPath}/js/home.js"> </script>
-	<script type="text/javascript"
 	src="${pageContext.request.contextPath}/js/jquery.min.js"> </script>
+	
+	
 	</head>
 	<body>
-		<a href="../paypalPlan/">Create subscription plan</a>
-		<a href="../jsp/search.jsp">Search</a>
-		
+	
 		<div id="content">
 		<ul>
-			<c:forEach var="task" items="${tasks}" varStatus="loop">
+			<c:forEach var="magazine" items="${magazines}" varStatus="loop">
 				<li>
-					<a href="../../task/${task.taskId}">${task.name}</a>
+					<a href="../magazines/magazine/${magazine.id}" id="magazine">${magazine.title}</a>
 				</li>
 			</c:forEach>
-			</ul>
+		</ul>
 		</div>
-		<a href="../task/startProcess/">Add article</a>
 	</body>
 </html>

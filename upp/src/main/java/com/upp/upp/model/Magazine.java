@@ -24,7 +24,7 @@ public class Magazine implements Serializable{
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	@Column
-	private String name;
+	private String title;
 	
 	@OneToMany
 	private List<User> memberships;

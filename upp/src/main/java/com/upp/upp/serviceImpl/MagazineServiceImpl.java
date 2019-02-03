@@ -1,6 +1,6 @@
 package com.upp.upp.serviceImpl;
 
-import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +19,12 @@ public class MagazineServiceImpl implements MagazineService {
 	public Iterable<Magazine> findAll() {
 		// TODO Auto-generated method stub
 		return magazineRepository.findAll();
+	}
+
+	@Override
+	public Optional<Magazine> findById(Long id) {
+		// TODO Auto-generated method stub
+		return magazineRepository.findById(id);
 	}
 
 }

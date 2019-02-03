@@ -2,6 +2,7 @@ package com.upp.upp.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -13,7 +14,9 @@ import org.camunda.bpm.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,8 +25,11 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.upp.upp.model.FormSubmissionDto;
+import com.upp.upp.model.Magazine;
+import com.upp.upp.model.PayPalPlan;
 import com.upp.upp.model.TaskDto;
 import com.upp.upp.service.MagazineService;
+import com.upp.upp.service.PayPalPlanService;
 
 @Controller
 @RequestMapping("/magazines")
@@ -38,10 +44,19 @@ public class MagazineController {
 	@Autowired
 	private FormService formService;
 	
+	@Autowired
+	private PayPalPlanService paypalPlanService;
+	
 	@RequestMapping(value = "/", method=RequestMethod.GET)
 	public String getMagazines(HttpServletRequest request) {
 		request.getSession().setAttribute("magazines", magazineService.findAll());
 		return "redirect:/jsp/chooseMagazine.jsp";
+	}
+	
+	@RequestMapping(value = "/all", method=RequestMethod.GET)
+	public String allMagazines(HttpServletRequest request) {
+		request.getSession().setAttribute("magazines", magazineService.findAll());
+		return "redirect:/jsp/allMagazines.jsp";
 	}
 	@RequestMapping(value = "/chooseMagazine/{id}/{task}", method=RequestMethod.GET)
 	public  RedirectView  chooseMagazine(HttpServletRequest request, @PathVariable ("id") Long id,@PathVariable ("task") String taskId) {
@@ -59,5 +74,16 @@ public class MagazineController {
 		List<FormField> properties = tfd.getFormFields();
 		request.getSession().setAttribute("formFields", properties);
 		return new RedirectView("/jsp/task.jsp");
+	}
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	public ResponseEntity<Optional<Magazine>> findById(@PathVariable ("id") Long id) {
+		return new ResponseEntity<Optional<Magazine>>(magazineService.findById(id),HttpStatus.OK);
+	}
+	@RequestMapping(value = "/magazine/{id}", method = RequestMethod.GET)
+	public String findByOne(HttpServletRequest request,@PathVariable ("id") Long id) {
+		Optional<Magazine> magazine = magazineService.findById(id);
+		PayPalPlan paypalPlan = paypalPlanService.findByMagazineId(magazine.get().getId());
+		request.getSession().setAttribute("paypalPlan", paypalPlan);
+		return "redirect:/jsp/magazine.jsp";
 	}
 }
