@@ -16,5 +16,11 @@
 	<body>
 		<input type="hidden" id="magazineId" value="${paypalPlan.payPalId}">
 		<a onclick="subscribe()">Subscribe</a>
+		<a onclick="buy()">Buy magazine</a>
+		<input type="hidden" id="issn" value="${magazine.issn}">
+		
+		<c:forEach items="${magazine.articles}" var="article">
+			<a href='../articles/${article.id}'>${article.title }</a>
+		</c:forEach>
 	</body>
 </html>

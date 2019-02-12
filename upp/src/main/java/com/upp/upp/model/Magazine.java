@@ -5,10 +5,13 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+
+import com.upp.upp.lucene.Article;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,6 +29,16 @@ public class Magazine implements Serializable{
 	@Column
 	private String title;
 	
+	@Column
+	private String issn;
 	@OneToMany
 	private List<User> memberships;
+	
+	@Column
+	private String clientId;
+	
+	@Column
+	private String clientSecret;
+	@OneToMany(fetch = FetchType.EAGER,mappedBy = "magazine")
+	private List<Article> articles;
 }

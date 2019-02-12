@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.camunda.bpm.engine.FormService;
 import org.camunda.bpm.engine.TaskService;
@@ -18,12 +19,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.view.RedirectView;
 
+import com.upp.upp.dto.OrderDTO;
 import com.upp.upp.model.FormSubmissionDto;
 import com.upp.upp.model.Magazine;
 import com.upp.upp.model.PayPalPlan;
@@ -47,6 +51,9 @@ public class MagazineController {
 	@Autowired
 	private PayPalPlanService paypalPlanService;
 	
+	@Autowired
+	private RestTemplate restTemplate;
+	
 	@RequestMapping(value = "/", method=RequestMethod.GET)
 	public String getMagazines(HttpServletRequest request) {
 		request.getSession().setAttribute("magazines", magazineService.findAll());
@@ -55,7 +62,11 @@ public class MagazineController {
 	
 	@RequestMapping(value = "/all", method=RequestMethod.GET)
 	public String allMagazines(HttpServletRequest request) {
-		request.getSession().setAttribute("magazines", magazineService.findAll());
+		List<Magazine> list = new ArrayList<>();
+		Iterable<Magazine> collection = magazineService.findAll();
+		collection.forEach(list::add);
+		request.getSession().setAttribute("test", "test");
+		request.getSession().setAttribute("magazines", list);
 		return "redirect:/jsp/allMagazines.jsp";
 	}
 	@RequestMapping(value = "/chooseMagazine/{id}/{task}", method=RequestMethod.GET)
@@ -84,6 +95,14 @@ public class MagazineController {
 		Optional<Magazine> magazine = magazineService.findById(id);
 		PayPalPlan paypalPlan = paypalPlanService.findByMagazineId(magazine.get().getId());
 		request.getSession().setAttribute("paypalPlan", paypalPlan);
+		request.getSession().setAttribute("magazine", magazine.get());
 		return "redirect:/jsp/magazine.jsp";
 	}
+	@CrossOrigin
+	@RequestMapping(value = "/createOrder/", method = RequestMethod.POST)
+	public ResponseEntity<?> createOrder(HttpServletRequest request,@RequestBody OrderDTO order,HttpServletResponse httpServletResponse) {
+		String url = restTemplate.postForObject("https://localhost:1234/koncentrator/order/create", order, String.class);
+	    return new ResponseEntity<String>(url,HttpStatus.OK);
+	}
+	
 }

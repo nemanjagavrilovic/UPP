@@ -21,7 +21,7 @@ $(document).on('click','#createPlan',function(){
 	
 	})
 	$.ajax({
-		url:'http://localhost:5555/makePlan',
+		url:'http://localhost:9001/lb/makePlan',
 		type:'POST',
 		data: data,
 		contentType:'application/json',

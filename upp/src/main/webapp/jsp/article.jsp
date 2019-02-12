@@ -9,18 +9,25 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<script type="text/javascript"
 	src="${pageContext.request.contextPath}/js/jquery.min.js"> </script>
-	
-	
+	<script type="text/javascript"
+	src="${pageContext.request.contextPath}/js/article.js"> </script>
 	</head>
 	<body>
+		
 		<div id="content">
-		<ul>
-			<c:forEach var="magazine" items="${magazines}" varStatus="loop">
-				<li>
-					<a href="../magazines/magazine/${magazine.id}" id="magazine">${magazine.title}</a>
-				</li>
-			</c:forEach>
-		</ul>
+		<table>
+			<tr>
+				<td>
+					<h1>${article.title}</h1>
+				</td>
+				<td>
+					<a onclick="buy()">Buy article</a>
+				</td>
+			</tr>
+		</table>
 		</div>
 	</body>
+	<input type="hidden" id="issn" value="${article.magazine.issn }">
+	<input type="hidden" id="title" value="${article.title }">
+	
 </html>

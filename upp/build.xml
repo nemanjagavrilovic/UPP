@@ -1,0 +1,231 @@
+<project name="JAX-WS (Example 1)" default="main" basedir=".">
+
+	<property file="ant.properties" />
+
+	<property name="bin.dir" value="${basedir}/target/classes"/>
+	<property name="src.dir" value="${basedir}/src"/>
+	<property name="lib.dir" value="${basedir}/lib"/>
+	<property name="dist.dir" value="${basedir}/dist"/>
+	<property name="gen.dir" value="${basedir}/gen"/>
+	<property name="webinf.dir" value="${basedir}/WEB-INF"/>
+	<property name="wsdl.dir" value="${src.dir}/main/resources/wsdl"/>
+
+	<target name="check-war-name" unless="war.name">
+		<fail>
+			Property "war.name" is not set. Please use the file
+			"ant.properties" in this directory ${basedir} to
+			set this property.
+		</fail>
+	</target>
+
+	<target name="check-tomee" unless="tomee.dir">
+		<fail>
+			Property "tomee.dir" is not set. Please use the file
+			"build.properties" in this directory ${basedir} to
+			set this property. It must point to the directory which
+			contains the following directory: "bin", "conf", "webapps"
+			etc.
+		</fail>
+	</target>
+
+	<target name="check-environment">
+		<antcall target="check-war-name"/>
+		<antcall target="check-tomee"/>
+	</target>
+
+	<target name="init" depends="check-environment">
+		<echo message="java.home = ${java.home}"/>
+		<echo message="deploy.dir = ${tomee.dir}"/>
+	</target>
+
+	<path id="cxf.classpath">
+		<pathelement location="${basedir}"/>
+		<pathelement location="${src.dir}"/>
+		<pathelement path="${bin.dir}"/>
+		<fileset dir="${lib.dir}">
+			<include name="*.jar"/>
+		</fileset>
+		<fileset dir="${tomee.dir}/lib">
+			<include name="*.jar"/>
+		</fileset>
+	</path>
+
+	<!-- Check the following URL: http://cxf.apache.org/docs/java-to-ws.html -->
+	<macrodef name="java2ws">
+		<attribute name="destdir" default="${gen.dir}" />
+		<attribute name="sei.class"/>
+		<attribute name="wsdl.file"/>
+		<attribute name="service.name"/>
+		<attribute name="port.name"/>
+		<sequential>
+			<java classname="org.apache.cxf.tools.java2ws.JavaToWS" fork="true" failonerror="true">
+				<arg value="-verbose"/>
+				<arg value="-wsdl"/>
+				<arg value="-client"/>
+				<arg value="-wrapperbean"/>
+				<arg value="-server"/>
+				<arg value="-o"/>
+				<arg value="@{wsdl.file}"/>
+				<arg value="-d"/>
+				<arg value="@{destdir}"/>
+				<arg value="-s"/>
+				<arg value="@{destdir}"/>
+				<arg value="-servicename"/>
+				<arg value="@{service.name}"/>
+				<arg value="-portname"/>
+				<arg value="@{port.name}"/>
+				<arg value="@{sei.class}"/>
+				<classpath>
+					<path refid="cxf.classpath"/>
+				</classpath>
+			</java>
+		</sequential>
+	</macrodef>
+
+	<target name="generate-code">
+		<echo level="info" message="Generating code using java2ws..."/>
+		<!--
+		
+		<java2ws sei.class="xml.projekat.webService.MessageWebService" 
+			    		 port.name="MessagePort" 
+			    	     service.name="MessageWebService" 
+			    	     wsdl.file="${wsdl.dir}/MessageWebService.wsdl"/>
+		<java2ws sei.class="xml.projekat.webService.UserWebService" 
+						    		 port.name="UserPort" 
+						    	     service.name="UserWebService" 
+						    	     wsdl.file="${wsdl.dir}/UserWebService.wsdl"/>
+
+						    	    
+		
+		<java2ws sei.class="xml.projekat.webService.ObjectTypeWebService" 
+											    		 port.name="ObjectTypePort" 
+											    	     service.name="ObjectTypeWebService" 
+											    	     wsdl.file="${wsdl.dir}/ObjectTypeWebService.wsdl"/>
+														    	    
+		<java2ws sei.class="xml.projekat.webService.ServiceWebService" 
+														    		 port.name="ServicePort" 
+														    	     service.name="ServiceWebService" 
+														    	     wsdl.file="${wsdl.dir}/ServiceWebService.wsdl"/>
+		<java2ws sei.class="xml.projekat.webService.ObjectTypeWebService" 
+														    		 port.name="ObjectTypePort" 
+														    	     service.name="ObjectTypeWebService" 
+														    	     wsdl.file="${wsdl.dir}/ObjectTypeWebService.wsdl"/>
+		
+		
+		<java2ws sei.class="xml.projekat.webService.ObjectCategoryWebService" 
+														    		 port.name="ObjectCategoryPort" 
+														    	     service.name="ObjectCategoryWebService" 
+														    	     wsdl.file="${wsdl.dir}/ObjectCategoryWebService.wsdl"/>
+
+		<java2ws sei.class="xml.projekat.webService.LocationWebService" 
+			    		 port.name="LocationPort" 
+			    	     service.name="LocationWebService" 
+			    	     wsdl.file="${wsdl.dir}/LocationWebService.wsdl"/>
+		<java2ws sei.class="xml.projekat.webService.ArrangmentsWebService" 
+		    		 port.name="ArrangmentsPort" 
+		    	     service.name="ArrangmentsWebService" 
+		    	     wsdl.file="${wsdl.dir}/ArrangmentsWebService.wsdl"/>	
+		<java2ws sei.class="xml.projekat.webService.AccomodationWebService" 
+														    		 port.name="AccomodationPort" 
+														    	     service.name="AccomodationWebService" 
+														    	     wsdl.file="${wsdl.dir}/AccomodatinoWebService.wsdl"/>
+		<java2ws sei.class="xml.projekat.webService.InboxWebService" 
+						    		 port.name="InboxPort" 
+						    	     service.name="InboxWebService" 
+						    	     wsdl.file="${wsdl.dir}/InboxWebService.wsdl"/>
+				
+		
+		<java2ws sei.class="xml.projekat.webService.PriceWebService" 
+									    		 port.name="PricePort" 
+									    	     service.name="PriceWebService" 
+									    	     wsdl.file="${wsdl.dir}/PriceWebService.wsdl"/>
+										
+		<java2ws sei.class="xml.projekat.webService.PriceScheduleWebService" 
+											    		 port.name="PriceSchedulePort" 
+											    	     service.name="PriceScheduleWebService" 
+											    	     wsdl.file="${wsdl.dir}/PriceScheduleWebService.wsdl"/>
+									
+		<java2ws sei.class="xml.projekat.webService.UserWebService" 
+								    		 port.name="UserPort" 
+								    	     service.name="UserWebService" 
+								    	     wsdl.file="${wsdl.dir}/UserWebService.wsdl"/>		
+		<java2ws sei.class="xml.projekat.webService.RatingWebService" 
+									    		 port.name="RatingPort" 
+									    	     service.name="RatingWebService" 
+									    	     wsdl.file="${wsdl.dir}/RatingWebService.wsdl"/>		
+		
+		<java2ws sei.class="xml.projekat.webService.CommentWebService" 
+											    		 port.name="CommentPort" 
+											    	     service.name="CommentWebService" 
+											    	     wsdl.file="${wsdl.dir}/CommentWebService.wsdl"/>
+		<java2ws sei.class="xml.projekat.webService.ArrangmentsWebService" 
+									    		 port.name="ArrangmentsPort" 
+									    	     service.name="ArrangmentsWebService" 
+									    	     wsdl.file="${wsdl.dir}/ArrangmentsWebService.wsdl"/>
+			<java2ws sei.class="xml.projekat.webService.AccomodationWebService" 
+																    		 port.name="AccomodationPort" 
+																    	     service.name="AccomodationWebService" 
+																    	     wsdl.file="${wsdl.dir}/AccomodatinoWebService.wsdl"/>
+		
+		-->
+		<java2ws sei.class="com.project.udd.upravljanjeDD.webService.ArticleWebService" 
+																    		 port.name="ArticlePort" 
+																    	     service.name="ArticleWebService" 
+																    	     wsdl.file="${wsdl.dir}/ArticleWebService.wsdl"/>
+				
+				
+	
+				
+			</target>
+	
+	
+	<target name="compile" depends="init">
+		<javac destdir="${bin.dir}" includeantruntime="true" debug="on">
+			<classpath>
+				<fileset dir="${lib.dir}">
+					<include name="*.jar"/>
+				</fileset>
+			</classpath>
+			<src path="${src.dir}"/>
+		</javac>
+	</target>
+
+	<target name="copy-non-java" depends="compile"
+			description="Copies non java files to bin directory">
+		<copy todir="${bin.dir}">
+			<fileset dir="${src.dir}" excludes="**/*.java"/>
+		</copy>
+	</target>
+
+	<target name="war" depends="compile">
+		<delete file="${war.name}"/>
+		<war warfile="${dist.dir}/${war.name}" webxml="${webinf.dir}/web.xml">
+			<classes dir="${bin.dir}">
+				<exclude name="**/client/*.class"/>
+				<include name="**/*.class"/>
+			</classes>
+			<lib dir="${lib.dir}">
+				<include name="spring-*.jar"/>
+			</lib>
+			<webinf dir="${webinf.dir}">
+				<include name="wsdl/**"/>
+				<include name="cxf-servlet.xml"/>
+			</webinf>
+		</war>
+	</target>
+
+	<target name="deploy" depends="war">
+		<copy todir="${tomee.dir}/webapps">
+			<fileset dir="${dist.dir}" includes="${war.name}"/>
+		</copy>
+	</target>
+
+	<target name="clean">
+		<delete file="${dist.dir}/${war.name}"/>
+		<delete file="${tomee.dir}/webapps/${war.name}"/>
+	</target>
+
+	<target name="main" depends="deploy">
+	</target>
+
+</project>

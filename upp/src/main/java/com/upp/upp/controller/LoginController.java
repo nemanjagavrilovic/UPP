@@ -48,8 +48,8 @@ public class LoginController {
 	private UserService userService;
 	
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	private ResponseEntity<User> login (HttpServletRequest request, @RequestBody User user) {
-		User loggedUser = userService.findByUsernameAndPassword(user.getUsername(), user.getPassword());
+	private ResponseEntity<User> login (HttpServletRequest request, @RequestBody com.upp.upp.model.User user) {
+		com.upp.upp.model.User loggedUser = userService.findByUsernameAndPassword(user.getUsername(), user.getPassword());
 		Authentication currentAuthentication = null;
 		
 		if(loggedUser != null) {
