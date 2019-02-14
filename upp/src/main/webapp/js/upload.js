@@ -18,7 +18,7 @@ $(document).on('click',"#btnSubmit",function(e){
 		"file" : fileResult,
 		"filename" : fileName,
 		"scientificField" : "Medicina",
-		"abstracts" : "Vakcinisanje građana protiv N1H1",
+		"abstracts" : $("#abstract").val(),
 		"magazineName" : "Lepota i zdravlje",
 		"authors" : [
 		         	{
@@ -63,14 +63,14 @@ $(document).on('click',"#btnSubmit",function(e){
 			 			]
 	})
 	$.ajax({
-		url:'../searchController/save',
+		url:'../articles/save/'+$("#task").val(),
 		type:'POST',
 		enctype: 'multipart/form-data',
 		contentType:"application/json",
 		dataType:"json",
 		data:data,
 		success:function(response){
-			alert("Saved")
+			window.top.location="../jsp/addCoauthor.jsp";
 		}
 	})
 })

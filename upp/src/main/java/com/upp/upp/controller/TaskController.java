@@ -119,7 +119,7 @@ public class TaskController {
 	
         return new TaskDto(task.getId(), task.getName(), task.getAssignee());
     }
-	
+	//Get taske
 	@RequestMapping(path = "/{taskId}", produces = "application/json", method=RequestMethod.GET)
 	public String  getTask(@PathVariable ("taskId") String taskId,
 												HttpServletRequest request) {
@@ -132,7 +132,7 @@ public class TaskController {
 		request.getSession().setAttribute("formFields", properties);
 		return "redirect:/jsp/task.jsp";
 	}
-	
+	//All user tasks
 	@RequestMapping(path = "/tasks", produces = "application/json", method=RequestMethod.GET)
 	public String getUserTasks(HttpServletRequest request) {
 		String user = (String)request.getSession().getAttribute("loggedUser");

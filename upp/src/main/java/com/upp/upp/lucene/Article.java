@@ -94,7 +94,6 @@ public class Article {
 	@XmlElement(required = true)
 	protected String scientificField;
 	
-	@Column
 	@XmlElement(required = true)
 	protected String file;
 

@@ -78,13 +78,15 @@ public class MagazineController {
 		List<FormSubmissionDto> list = new ArrayList<>();
 		list.add(fsd);
 		HttpEntity<List<FormSubmissionDto>> entity = new HttpEntity<List<FormSubmissionDto>>(list, headers);
-		TaskDto response = client.postForObject("http://localhost:9000/task/post/"+taskId+"/chooseMagazine", entity,
+		TaskDto response = client.postForObject("http://localhost:8081/task/post/"+taskId+"/chooseMagazine", entity,
 				TaskDto.class);
 		Task task =  taskService.createTaskQuery().taskId(response.getTaskId()).list().get(0);
 		TaskFormData tfd = formService.getTaskFormData(task.getId());
 		List<FormField> properties = tfd.getFormFields();
 		request.getSession().setAttribute("formFields", properties);
-		return new RedirectView("/jsp/task.jsp");
+		request.getSession().setAttribute("task", new TaskDto(task.getId(), task.getName(), task.getAssignee()));
+		
+		return new RedirectView("/jsp/upload.jsp");
 	}
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Optional<Magazine>> findById(@PathVariable ("id") Long id) {

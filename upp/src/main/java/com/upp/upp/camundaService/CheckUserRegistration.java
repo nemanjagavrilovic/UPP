@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.upp.upp.model.FormSubmissionDto;
-import com.upp.upp.model.User;
+import com.upp.upp.model.CamundaUser;
 import com.upp.upp.repository.UserRepository;
 
 @Service
@@ -34,10 +34,10 @@ public class CheckUserRegistration implements JavaDelegate {
 			else if (dto.getFieldId().equals("password"))
 				password = dto.getFieldValue();
 		}
-		User user = userRepository.findByUsername(username);
+		CamundaUser user = userRepository.findByUsername(username);
 		
 		if( user == null ) {
-			user = userRepository.save(new User(username,password));
+			user = userRepository.save(new CamundaUser(username,password));
 
 	        org.camunda.bpm.engine.identity.User newUser = identityService.newUser(user.getUsername());
 	        newUser.setPassword(password);

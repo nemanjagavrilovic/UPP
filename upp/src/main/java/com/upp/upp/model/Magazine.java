@@ -9,6 +9,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import com.upp.upp.lucene.Article;
@@ -31,8 +33,8 @@ public class Magazine implements Serializable{
 	
 	@Column
 	private String issn;
-	@OneToMany
-	private List<User> memberships;
+	@ManyToMany
+	private List<CamundaUser> memberships;
 	
 	@Column
 	private String clientId;
@@ -41,4 +43,10 @@ public class Magazine implements Serializable{
 	private String clientSecret;
 	@OneToMany(fetch = FetchType.EAGER,mappedBy = "magazine")
 	private List<Article> articles;
+	
+	@Column
+	private String scientificField;
+	
+	@ManyToOne
+	private CamundaUser editor;
 }

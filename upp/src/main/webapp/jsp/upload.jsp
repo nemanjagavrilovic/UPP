@@ -1,6 +1,9 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <html>
+<head>
+<meta charset="UTF-8">
 	<head>
 		<link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
@@ -10,19 +13,15 @@
 	<script type="text/javascript"
 	src="${pageContext.request.contextPath}/js/jquery.min.js"> </script>
 	<script type="text/javascript"
-	src="${pageContext.request.contextPath}/js/chooseMagazine.js"> </script>
-	
+	src="${pageContext.request.contextPath}/js/upload.js"> </script>
 	</head>
-	<body>
-	
-		<div id="content">
-		<ul>
-			<c:forEach var="magazine" items="${magazines}" varStatus="loop">
-				<li>
-					<a href="../magazines/chooseMagazine/${magazine.id}/${task.taskId}" id="magazine">${magazine.title}</a>
-				</li>
-			</c:forEach>
-		</ul>
-		</div>
-	</body>
+<title>Insert title here</title>
+</head>
+<body>
+	Title<input type='text' id='title'>
+	Abstract<input type='text' id='abstract'>
+	<input type='file'  onchange='openFile(event)'><br>
+	<input type="button" value="Submit" id="btnSubmit" />
+	<input type="hidden" id="task" value="${task.taskId}">
+</body>
 </html>

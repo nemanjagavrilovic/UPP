@@ -8,7 +8,7 @@ $(document).on('click',"#magazine", function(e) {
 		url : href,
 		type : 'GET',
 		success:function(response){
-			window.top.location = '../../../jsp/task.jsp';
+			window.top.location = '../../../jsp/upload.jsp';
 		}
 		
 	})

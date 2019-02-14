@@ -1,8 +1,8 @@
 package com.upp.upp.service;
 
-import com.upp.upp.model.User;
+import com.upp.upp.model.CamundaUser;
 
 public interface UserService {
 
-	public User findByUsernameAndPassword(String username, String password);
+	public CamundaUser findByUsernameAndPassword(String username, String password);
 }
