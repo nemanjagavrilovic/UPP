@@ -130,6 +130,11 @@ public class TaskController {
 			System.out.println(fp.getId() + fp.getType());
 		}
 		request.getSession().setAttribute("formFields", properties);
+		request.getSession().setAttribute("task", new TaskDto(task.getId(), task.getName(), task.getAssignee()));
+		if(task.getName().equals("Chief editor review")) {
+			
+			return "redirect:/jsp/editorReview.jsp";
+		}
 		return "redirect:/jsp/task.jsp";
 	}
 	//All user tasks

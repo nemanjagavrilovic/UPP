@@ -5,19 +5,18 @@ import java.util.List;
 import org.camunda.bpm.engine.IdentityService;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
-import org.camunda.bpm.engine.impl.persistence.entity.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.upp.upp.model.FormSubmissionDto;
 import com.upp.upp.model.CamundaUser;
-import com.upp.upp.repository.UserRepository;
+import com.upp.upp.model.FormSubmissionDto;
+import com.upp.upp.repository.CamundaUserRepository;
 
 @Service
 public class CheckUserRegistration implements JavaDelegate {
 
 	@Autowired
-	private UserRepository userRepository;
+	private CamundaUserRepository userRepository;
 	
 	@Autowired
 	private IdentityService identityService;

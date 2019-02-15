@@ -10,9 +10,10 @@ import org.springframework.stereotype.Service;
 
 import com.upp.upp.converter.CamundaUserToUserConverter;
 import com.upp.upp.lucene.Article;
-import com.upp.upp.model.CamundaUser;
+import com.upp.upp.lucene.User;
 import com.upp.upp.model.FormSubmissionDto;
 import com.upp.upp.repository.ArticleRepository;
+import com.upp.upp.repository.CamundaUserRepository;
 import com.upp.upp.repository.UserRepository;
 
 @Service
@@ -20,6 +21,9 @@ public class AddCoauthor implements ExecutionListener{
 
 	@Autowired
 	private ArticleRepository articleRepository;
+	
+	@Autowired
+	private CamundaUserRepository camundaUserRepository;
 	
 	@Autowired
 	private UserRepository userRepository;
@@ -53,15 +57,15 @@ public class AddCoauthor implements ExecutionListener{
 				addMore = dto.getFieldValue();
 			}
 		}
-		CamundaUser coauthor = new CamundaUser(firstName,lastName,country,city,email);
-		CamundaUser userFromDatabase = userRepository.findByEmail(email);
-		if(userFromDatabase != null){
-			articleFromDatabase.get().getAuthors().add(camundaUserToUserConverter.convert(userFromDatabase));
+		User user = userRepository.findByEmail(email);
+		if(user != null){
+			articleFromDatabase.get().getAuthors().add(user);
 		} else {
-			coauthor = userRepository.save(coauthor);
-			articleFromDatabase.get().getAuthors().add(camundaUserToUserConverter.convert(coauthor));
+			User user1 = new User(firstName,lastName,email,city,country);
+			user = userRepository.save(user1);
+			articleFromDatabase.get().getAuthors().add(user);
 		}
-		
+		articleRepository.save(articleFromDatabase.get());
 		if(addMore.equals("true")) {
 			execution.setVariable("addMore", true);
 		} else {

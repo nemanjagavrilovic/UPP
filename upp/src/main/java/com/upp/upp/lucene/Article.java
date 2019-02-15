@@ -103,4 +103,12 @@ public class Article {
 	@XmlElement
 	@ManyToOne(fetch = FetchType.EAGER)
 	protected Magazine magazine;
+	
+	public String keywordsToString(){
+		String retVal = "";
+		for(String s : this.keywords){
+			retVal += s+",";
+		}
+		return retVal;
+	}
 }

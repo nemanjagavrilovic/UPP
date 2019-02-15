@@ -1,4 +1,4 @@
-function getFormFields(formFields) {
+function getFormFields() {
 	var data = new Array();
 	data.push({fieldId : "firstName", fieldValue : $("#firstName").val()});
 	data.push({fieldId : "lastName", fieldValue : $("#lastName").val()});

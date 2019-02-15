@@ -43,9 +43,9 @@
 		</div>
 	</body>
 	<script type="text/javascript">
-	var formFields = '<%= session.getAttribute("formFields") %>';
+
 	$(document).on('click','#add',function() {
-		var data = JSON.stringify(getFormFields(formFields));
+		var data = JSON.stringify(getFormFields());
 		$.ajax({
 			url : '/task/post/'+$("#task").val()+'/'+'addCoauthor',
 			type : 'POST',

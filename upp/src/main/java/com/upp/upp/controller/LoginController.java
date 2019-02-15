@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.upp.upp.model.CamundaUser;
-import com.upp.upp.service.UserService;
+import com.upp.upp.service.CamundaUserService;
 
 @Controller
 @RequestMapping("/login")
@@ -37,7 +37,7 @@ public class LoginController {
 	private IdentityService identityService;
 	
 	@Autowired
-	private UserService userService;
+	private CamundaUserService userService;
 	
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	private ResponseEntity<CamundaUser> login (HttpServletRequest request, @RequestBody CamundaUser user) {

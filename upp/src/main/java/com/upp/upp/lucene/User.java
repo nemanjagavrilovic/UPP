@@ -48,6 +48,8 @@ import javax.xml.bind.annotation.XmlType;
     "lastName",
     "email",
     "age",
+    "city",
+    "country",
     "lat",
     "lon"
 })
@@ -78,6 +80,13 @@ public class User {
     @Column
     @XmlElement(required = true)
     protected double lon;
+    
+    @Column
+	@XmlElement(required = true)
+    protected String city;
+    @Column
+	@XmlElement(required = true)
+    protected String country;
     /**
      * Gets the value of the id property.
      * 
@@ -180,6 +189,35 @@ public class User {
 
 	public void setLon(double lon) {
 		this.lon = lon;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getCountry() {
+		return country;
+	}
+
+	public void setCountry(String country) {
+		this.country = country;
+	}
+
+	public User(String firstName, String lastName, String email, String city, String country) {
+		super();
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.city = city;
+		this.country = country;
+	}
+
+	public User() {
+		super();
 	}
 
     
