@@ -12,7 +12,8 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
-import com.upp.upp.lucene.Article;
+
+import com.upp.upp.lucene.ArticleTransport;
 
 
 /**
@@ -41,7 +42,7 @@ import com.upp.upp.lucene.Article;
 })
 public class ArticleSaveResponse {
 
-    protected Article article;
+    protected ArticleTransport article;
 
     /**
      * Gets the value of the article property.
@@ -51,7 +52,7 @@ public class ArticleSaveResponse {
      *     {@link Object }
      *     
      */
-    public Article getArticle() {
+    public ArticleTransport getArticle() {
         return article;
     }
 
@@ -63,7 +64,7 @@ public class ArticleSaveResponse {
      *     {@link Object }
      *     
      */
-    public void setArticle(Article value) {
+    public void setArticle(ArticleTransport value) {
         this.article = value;
     }
 

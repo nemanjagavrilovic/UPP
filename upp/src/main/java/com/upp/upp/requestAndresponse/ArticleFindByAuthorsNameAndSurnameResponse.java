@@ -16,7 +16,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-import com.upp.upp.lucene.Article;
+import com.upp.upp.lucene.ArticleTransport;
 
 
 /**
@@ -46,7 +46,7 @@ import com.upp.upp.lucene.Article;
 @XmlRootElement
 public class ArticleFindByAuthorsNameAndSurnameResponse {
 
-    protected List<Article> articles;
+    protected List<ArticleTransport> articles;
 
     /**
      * Gets the value of the articles property.
@@ -70,9 +70,9 @@ public class ArticleFindByAuthorsNameAndSurnameResponse {
      * 
      * 
      */
-    public List<Article> getArticles() {
+    public List<ArticleTransport> getArticles() {
         if (articles == null) {
-            articles = new ArrayList<Article>();
+            articles = new ArrayList<ArticleTransport>();
         }
         return this.articles;
     }

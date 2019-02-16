@@ -10,10 +10,12 @@
 package com.upp.upp.requestAndresponse;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
-import com.upp.upp.lucene.Article;
+
+import com.upp.upp.lucene.ArticleTransport;
 
 /**
  * <p>Java class for articleFindByAbstractResponse complex type.
@@ -40,7 +42,7 @@ import com.upp.upp.lucene.Article;
 })
 public class ArticleFindByAbstractResponse {
 
-    protected List<Article> articles;
+    protected List<ArticleTransport> articles;
 
     /**
      * Gets the value of the articles property.
@@ -64,9 +66,9 @@ public class ArticleFindByAbstractResponse {
      * 
      * 
      */
-    public List<Article> getArticles() {
+    public List<ArticleTransport> getArticles() {
         if (articles == null) {
-            articles = new ArrayList<Article>();
+            articles = new ArrayList<ArticleTransport>();
         }
         return this.articles;
     }

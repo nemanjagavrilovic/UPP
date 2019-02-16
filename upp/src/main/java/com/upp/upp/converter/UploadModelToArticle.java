@@ -4,15 +4,16 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
 import com.upp.upp.lucene.Article;
+import com.upp.upp.lucene.ArticleTransport;
 import com.upp.upp.lucene.UploadModel;
 
 @Component
-public class UploadModelToArticle implements Converter<UploadModel,Article>{
+public class UploadModelToArticle implements Converter<UploadModel,ArticleTransport>{
 
 	@Override
-	public Article convert(UploadModel arg0) {
+	public ArticleTransport convert(UploadModel arg0) {
 		// TODO Auto-generated method stub
-		Article article = new Article();
+		ArticleTransport article = new ArticleTransport();
 		article.setAbstracts(arg0.getAbstracts());
 		article.setAuthors(arg0.getAuthors());
 		article.setFilename(arg0.getFilename());

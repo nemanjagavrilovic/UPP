@@ -6,7 +6,8 @@ import javax.xml.bind.JAXBElement;
 
 import org.springframework.ws.client.core.support.WebServiceGatewaySupport;
 import org.springframework.ws.soap.client.core.SoapActionCallback;
-import com.upp.upp.lucene.Article;
+
+import com.upp.upp.lucene.ArticleTransport;
 import com.upp.upp.lucene.SearchType;
 import com.upp.upp.requestAndresponse.ArticleBooleanQueryRequest;
 import com.upp.upp.requestAndresponse.ArticleBooleanQueryResponse;
@@ -37,7 +38,7 @@ import com.upp.upp.requestAndresponse.QueryModel;
 public class ArticleClient extends WebServiceGatewaySupport{
 
 	public JAXBElement<ArticleSaveResponse> save(
-			Article article){
+			ArticleTransport article){
 		ArticleSaveRequest request = new ArticleSaveRequest();
 		request.setArticle(article);
 		@SuppressWarnings("unchecked")
@@ -148,7 +149,7 @@ public class ArticleClient extends WebServiceGatewaySupport{
 						new SoapActionCallback("http://webService.demo.example.com/findByText"));
 		return response;
 	}
-	public JAXBElement<ArticleFindByDistanceResponse> findByDistance(Article article){
+	public JAXBElement<ArticleFindByDistanceResponse> findByDistance(ArticleTransport article){
 		ArticleFindByDistanceRequest request = new ArticleFindByDistanceRequest();
 		request.setArticle(article);
 		@SuppressWarnings("unchecked")

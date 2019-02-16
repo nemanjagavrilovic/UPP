@@ -4,17 +4,17 @@ $(document).on('click','input[type="button"]',function(){
 	var id = $(this).attr('id');
 	if(id == 'reject') {
 		answer = 0;
-	} else if(id == "sendToRework") {
+	} else if(id == "accept") {
 		answer = 1;
-	} else {
+	} else if (id == "sendToRework"){
 		answer = 2;
+	} else {
+		answer = 3;
 	}
 	var data = new Array();
-	data.push({fieldId : "comment", fieldValue : $("#comment").val()});
-	data.push({fieldId : "action", fieldValue : answer});
-	
+	data.push({fieldId : "editorDecision", fieldValue : answer});
 	$.ajax({
-		url:'../task/post/'+$("#task").val()+'/editorReview',
+		url:'../task/post/'+$("#task").val()+'/finalDecision',
 		type:'POST',
 		contentType : 'application/json',
 		data: JSON.stringify(data),

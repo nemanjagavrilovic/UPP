@@ -8,6 +8,8 @@
 
 package com.upp.upp.lucene;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -54,7 +56,7 @@ import javax.xml.bind.annotation.XmlType;
     "lon"
 })
 @Entity
-public class User {
+public class User implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -18,7 +18,6 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlID;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSchemaType;
-import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
@@ -34,49 +33,36 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
-public class Article {
+public class ArticleTransport {
 
-	@Id
-	@GeneratedValue(strategy= GenerationType.IDENTITY)
-	private Long id;
-	
+
 	@XmlElement(required = true)
 	@XmlJavaTypeAdapter(CollapsedStringAdapter.class)
 	@XmlID
 	@XmlSchemaType(name = "ID")
-	@Column
 	protected String filename;
 
-	@Column
 	@XmlElement(required = true)
 	protected String title;
 
-	@Column
 	@XmlElement(required = true)
 	protected String content;
 
-	@Column
 	@XmlElement(required = true)
 	protected String abstracts;
 
-	@ElementCollection
 	@XmlElement(required = true)
 	protected List<String> keywords;
 
-	@Column
 	@XmlElement(required = true)
 	protected String magazineName;
 
-	@ManyToMany
 	@XmlElement(required = true)
 	protected List<User> authors = new ArrayList<User>();
 
-	@ManyToMany
 	@XmlElement(required = true)
 	protected List<User> reviewers;
 	
-	@Column
 	@XmlElement(required = true)
 	protected String scientificField;
 	
@@ -86,21 +72,4 @@ public class Article {
 	@XmlElement
 	protected String highlight;
 	
-	@XmlElement
-	@ManyToOne(fetch = FetchType.EAGER)
-	protected Magazine magazine;
-	
-	@ElementCollection
-	@XmlElement(required = true)
-	protected List<String> comments;
-	
-	public String keywordsToString(){
-		String retVal = "";
-		for(String s : this.keywords){
-			retVal += s+",";
-		}
-		return retVal;
-	}
-	@ElementCollection
-	protected List<String> suggestion;
 }

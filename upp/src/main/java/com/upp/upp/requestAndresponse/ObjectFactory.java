@@ -13,6 +13,8 @@ import javax.xml.bind.annotation.XmlElementDecl;
 import javax.xml.bind.annotation.XmlRegistry;
 import javax.xml.namespace.QName;
 
+import com.upp.upp.lucene.ArticleTransport;
+
 
 /**
  * This object contains factory methods for each 
@@ -67,8 +69,8 @@ public class ObjectFactory {
      * Create an instance of {@link Article }
      * 
      */
-    public Article createArticle() {
-        return new Article();
+    public ArticleTransport createArticle() {
+        return new ArticleTransport();
     }
 
     /**

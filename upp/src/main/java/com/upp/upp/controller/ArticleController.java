@@ -14,7 +14,6 @@ import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.xml.bind.JAXBElement;
 
 import org.camunda.bpm.engine.FormService;
 import org.camunda.bpm.engine.TaskService;
@@ -35,13 +34,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.client.RestTemplate;
 
+import com.upp.upp.converter.ArticleTransportToArticle;
 import com.upp.upp.converter.UploadModelToArticle;
 import com.upp.upp.dto.OrderDTO;
 import com.upp.upp.lucene.Article;
 import com.upp.upp.lucene.UploadModel;
 import com.upp.upp.model.FormSubmissionDto;
 import com.upp.upp.model.TaskDto;
-import com.upp.upp.requestAndresponse.ArticleSaveResponse;
 import com.upp.upp.service.ArticleService;
 
 @Controller
@@ -57,6 +56,8 @@ public class ArticleController {
 	@Autowired
 	private UploadModelToArticle uploadModelToArticle;
 	
+	@Autowired
+	private ArticleTransportToArticle articleTransportToArticle;
 	@Autowired
 	private TaskService taskService;
 	
@@ -84,7 +85,7 @@ public class ArticleController {
 	public ResponseEntity<Article> save(HttpServletRequest request,
 										@RequestBody UploadModel model,
 										@PathVariable ("task") String taskId){
-		Article article = uploadModelToArticle.convert(model);
+		Article article = articleTransportToArticle.convert(uploadModelToArticle.convert(model));
 		RestTemplate client = new RestTemplate();
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
@@ -111,6 +112,36 @@ public class ArticleController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return new ResponseEntity<Article>(article,HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/rework/{task}",method= RequestMethod.POST)
+	public ResponseEntity<Article> rework(HttpServletRequest request,
+										@RequestBody UploadModel model,
+										@PathVariable ("task") String taskId){
+		Article article = articleTransportToArticle.convert(uploadModelToArticle.convert(model));
+		RestTemplate client = new RestTemplate();
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		FormSubmissionDto filename = new FormSubmissionDto("filename",article.getFilename());
+		try {
+			String fileName = saveUploadedFile(article.getFile(),article.getFilename());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		List<FormSubmissionDto> list = new ArrayList<>();
+		list.add(filename);
+		HttpEntity<List<FormSubmissionDto>> entity = new HttpEntity<List<FormSubmissionDto>>(list, headers);
+		TaskDto response = client.postForObject("http://localhost:8081/task/post/"+taskId+"/rework", entity,
+				TaskDto.class);
+		Task task =  taskService.createTaskQuery().taskId(response.getTaskId()).list().get(0);
+		TaskFormData tfd = formService.getTaskFormData(task.getId());
+		List<FormField> properties = tfd.getFormFields();
+		request.getSession().setAttribute("formFields", properties);
+		request.getSession().setAttribute("task", new TaskDto(task.getId(), task.getName(), task.getAssignee()));
+		
+		
 		return new ResponseEntity<Article>(article,HttpStatus.OK);
 	}
 	private String saveUploadedFile(String file, String filename) throws IOException {

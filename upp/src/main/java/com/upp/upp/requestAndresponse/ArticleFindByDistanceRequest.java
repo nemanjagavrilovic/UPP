@@ -12,7 +12,8 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
-import com.upp.upp.lucene.Article;
+
+import com.upp.upp.lucene.ArticleTransport;
 /**
  * <p>Java class for articleFindByDistanceRequest complex type.
  * 
@@ -40,7 +41,7 @@ import com.upp.upp.lucene.Article;
 @XmlRootElement
 public class ArticleFindByDistanceRequest {
 
-    protected Article article;
+    protected ArticleTransport article;
 
     /**
      * Gets the value of the article property.
@@ -50,20 +51,20 @@ public class ArticleFindByDistanceRequest {
      *     {@link Object }
      *     
      */
-    public Article getArticle() {
+    public ArticleTransport getArticle() {
         return article;
     }
 
     /**
      * Sets the value of the article property.
      * 
-     * @param value
+     * @param article2
      *     allowed object is
      *     {@link Object }
      *     
      */
-    public void setArticle(Article value) {
-        this.article = value;
+    public void setArticle(ArticleTransport article2) {
+        this.article = article2;
     }
 
 }

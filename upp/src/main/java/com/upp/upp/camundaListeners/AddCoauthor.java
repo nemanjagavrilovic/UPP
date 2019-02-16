@@ -62,6 +62,8 @@ public class AddCoauthor implements ExecutionListener{
 			articleFromDatabase.get().getAuthors().add(user);
 		} else {
 			User user1 = new User(firstName,lastName,email,city,country);
+			user1.setLat(45.25167);
+			user1.setLon(19.83694);
 			user = userRepository.save(user1);
 			articleFromDatabase.get().getAuthors().add(user);
 		}

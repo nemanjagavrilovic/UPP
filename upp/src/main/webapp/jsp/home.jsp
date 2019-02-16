@@ -17,12 +17,21 @@
 		<a href="../jsp/search.jsp">Search</a>
 		
 		<div id="content">
-		<ul>
-			<c:forEach var="task" items="${tasks}" varStatus="loop">
-				<li>
-					<a href="../../task/${task.taskId}">${task.name}</a>
-				</li>
-			</c:forEach>
+			<ul>
+				<c:forEach var="task" items="${tasks}" varStatus="loop">
+					<li>
+						<a href="../../task/${task.taskId}">${task.name}</a>
+					</li>
+				</c:forEach>
+			</ul>
+			<ul>
+				<c:forEach var="task" items="${candidate}" varStatus="loop">
+					<li>
+						<a href="../../task/${task.taskId}">${task.name}</a>
+						<a href="../../task/claim/${task.taskId}">Claim</a>
+						
+					</li>
+				</c:forEach>
 			</ul>
 		</div>
 		<a href="../task/startProcess/">Add article</a>

@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.xml.bind.annotation.XmlTransient;
 
 import com.upp.upp.lucene.Article;
 
@@ -49,4 +50,12 @@ public class Magazine implements Serializable{
 	
 	@ManyToOne
 	private CamundaUser editor;
+	
+	@ManyToOne
+	private CamundaUser scientificFieldEditor;
+	
+	@XmlTransient
+	public List<Article> getArticles() {
+		return this.articles;
+	}
 }

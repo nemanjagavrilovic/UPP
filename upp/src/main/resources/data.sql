@@ -10,9 +10,13 @@ insert into magazine (id, title,issn)
 insert into camunda_user (id,password,username,first_name ,last_name,email)
 	values (1,'1234','admin','Admin','Admin','nemanja.gavrilovic1995@gmail.com');
 insert into camunda_user (id,password,username,first_name ,last_name,email)
-	values (2,'1234','nemanja','Nemanja','Gavrilović','nemanja.gavrilovic1995@gmail.com');
+	values (2,'1234','nemanja','Nemanja','Gavrilović','nemanja.gavrilovic@gmail.com');
 insert into camunda_user (id,password,username,first_name ,last_name,email)
-	values (3,'1234','editor','Marko','Markovski','nemanja.gavrilovic1995@gmail.com');
+	values (3,'1234','marko','Marko','Markovski','marko.markovic@gmail.com');
+insert into camunda_user (id,password,username,first_name ,last_name,email)
+	values (4,'1234','dragan','Dragan','Ivanovic','dragan.ivanovic@gmail.com');
+insert into camunda_user (id,password,username,first_name ,last_name,email)
+	values (5,'1234','editor','Nikola','Nikolovski','nikola@gmail.com');
 
 insert into magazine_memberships (magazine_id,memberships_id)
 	values (21,1);

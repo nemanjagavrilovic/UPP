@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.upp.upp.client.ArticleClient;
 import com.upp.upp.converter.UploadModelToArticle;
 import com.upp.upp.lucene.Article;
+import com.upp.upp.lucene.ArticleTransport;
 import com.upp.upp.lucene.SearchType;
 import com.upp.upp.lucene.UploadModel;
 import com.upp.upp.lucene.User;
@@ -50,50 +51,50 @@ public class SearchController {
 		
 		if(request.getField().equals("Title")){
 			JAXBElement<ArticleFindByTitleResponse> response = articleClient.findByTitle(request.getText(), request.getSearchType());
-			return new ResponseEntity<List<Article>>(response.getValue().getArticles(),HttpStatus.OK);
+			return new ResponseEntity<List<ArticleTransport>>(response.getValue().getArticles(),HttpStatus.OK);
 		} else if (request.getField().equals("Text")) {
 			JAXBElement<ArticleFindByTextResponse> response = articleClient.findByText(request.getText(),request.getSearchType());
-			return new ResponseEntity<List<Article>>(response.getValue().getArticles(),HttpStatus.OK);
+			return new ResponseEntity<List<ArticleTransport>>(response.getValue().getArticles(),HttpStatus.OK);
 		} else if (request.getField().equals("Abstracts")) {
 			JAXBElement<ArticleFindByAbstractResponse> response = articleClient.findByAbstracts(request.getText(),request.getSearchType());
-			return new ResponseEntity<List<Article>>(response.getValue().getArticles(),HttpStatus.OK);
+			return new ResponseEntity<List<ArticleTransport>>(response.getValue().getArticles(),HttpStatus.OK);
 		} else if (request.getField().equals("ScientificField")) {
 			JAXBElement<ArticleFindByScientificFieldResponse> response = articleClient.findByScientificField(request.getText(),request.getSearchType());
-			return new ResponseEntity<List<Article>>(response.getValue().getArticles(),HttpStatus.OK);
+			return new ResponseEntity<List<ArticleTransport>>(response.getValue().getArticles(),HttpStatus.OK);
 		} else if (request.getField().equals("MagazineName")) {
 			JAXBElement<ArticleFindByMagazineResponse> response = articleClient.findByMagazineName(request.getText(),request.getSearchType());
-			return new ResponseEntity<List<Article>>(response.getValue().getArticles(),HttpStatus.OK);
+			return new ResponseEntity<List<ArticleTransport>>(response.getValue().getArticles(),HttpStatus.OK);
 		} else if (request.getField().equals("Keywords")) {
 			String [] keywords = request.getText().split(",");
 			List<String> arrayList = new ArrayList<>();
 			Collections.addAll(arrayList, keywords); 
 			JAXBElement<ArticleKeywordsResponse> response = articleClient.findByKeywords(arrayList);
-			return new ResponseEntity<List<Article>>(response.getValue().getArticles(),HttpStatus.OK);
+			return new ResponseEntity<List<ArticleTransport>>(response.getValue().getArticles(),HttpStatus.OK);
 		} 
 		return new ResponseEntity<>(null,HttpStatus.OK);
 	}
 	@RequestMapping(value="/findByNameAndSurname/{name}/{surname}/{searchType}",method= RequestMethod.POST)
-	public ResponseEntity<List<Article>> findByNameAndSurname(@PathVariable ("name") String name,
+	public ResponseEntity<List<ArticleTransport>> findByNameAndSurname(@PathVariable ("name") String name,
 																@PathVariable ("surname") String surname,
 																@PathVariable ("searchType") SearchType searchType) {
 		JAXBElement<ArticleFindByAuthorsNameAndSurnameResponse> response = articleClient.findByNameAndSurname(name,surname,searchType);
-		return new ResponseEntity<List<Article>>(response.getValue().getArticles(),HttpStatus.OK);
+		return new ResponseEntity<List<ArticleTransport>>(response.getValue().getArticles(),HttpStatus.OK);
 	}
 	@RequestMapping(value="/booleanQuery/{operation}/{searchType}",method= RequestMethod.POST)
-	public ResponseEntity<List<Article>> booleanQuery(@RequestBody  List<QueryModel> queries,
+	public ResponseEntity<List<ArticleTransport>> booleanQuery(@RequestBody  List<QueryModel> queries,
 														@PathVariable ("operation") String operation,
 														@PathVariable ("searchType") SearchType searchType) {
 		JAXBElement<ArticleBooleanQueryResponse> response = articleClient.booleanQuery(queries,operation,searchType);
-		return new ResponseEntity<List<Article>>(response.getValue().getArticles(),HttpStatus.OK);
+		return new ResponseEntity<List<ArticleTransport>>(response.getValue().getArticles(),HttpStatus.OK);
 	}
 	@RequestMapping(value="/save",method= RequestMethod.POST)
-	public ResponseEntity<Article> save(@RequestBody UploadModel model){
-		Article article = uploadModelToArticle.convert(model);
+	public ResponseEntity<ArticleTransport> save(@RequestBody UploadModel model){
+		ArticleTransport article = uploadModelToArticle.convert(model);
 		JAXBElement<ArticleSaveResponse> response = articleClient.save(article);
-		return new ResponseEntity<Article>(response.getValue().getArticle(),HttpStatus.OK);
+		return new ResponseEntity<ArticleTransport>(response.getValue().getArticle(),HttpStatus.OK);
 	}
 	@RequestMapping(value="/findByDistance",method= RequestMethod.POST)
-	public ResponseEntity<List<User>> findByDistance(@RequestBody Article article){
+	public ResponseEntity<List<User>> findByDistance(@RequestBody ArticleTransport article){
 		JAXBElement<ArticleFindByDistanceResponse> response = articleClient.findByDistance(article);
 		return new ResponseEntity<List<User>>(response.getValue().getReviewers(),HttpStatus.OK);
 	}
