@@ -22,7 +22,7 @@ $(document).on('click','#login',function(){
 		contentType:'application/json',
 		success:function(response){
 			if(response != "") {
-				window.top.location = '../jsp/home.jsp';
+				window.top.location = '../task/tasks';
 			}
 		}
 	})

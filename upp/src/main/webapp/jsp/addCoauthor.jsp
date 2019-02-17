@@ -15,6 +15,7 @@
 	src="${pageContext.request.contextPath}/js/generateFormFields.js"> </script>
 	</head>
 	<body>
+	<c:import url="_navbar.jsp"></c:import>
 		<div id="content">
 		
 		<c:forEach var="field" items="${formFields}" varStatus="loop">
@@ -39,6 +40,7 @@
 				</c:choose>
 			</c:forEach>
 			<input type="button" value="Add" id="add">
+			<input type="button" value="Skip" id="skip">
 			<input type="hidden" id="task" value="${task.taskId}">
 		</div>
 	</body>

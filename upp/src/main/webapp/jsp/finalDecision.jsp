@@ -15,15 +15,19 @@
 	src="${pageContext.request.contextPath}/js/generateFormFields.js"> </script>
 	</head>
 	<body>
+	<c:import url="_navbar.jsp"></c:import>
 		<div id="content">
 		Title : ${article.title}
 		Abstract : ${article.abstracts}
 		Keywords : ${article.keywordsToString()}
 		<textarea rows="5" cols="20" id="comment"></textarea> 
-		<c:forEach items="${article.comments}" val="comment">
+		<c:forEach items="${article.commentsForAuthors}" var="comment">
 			<p>${comment}</p>
 		</c:forEach>
-		<c:forEach items="${article.suggestion}" val="suggestion">
+		<c:forEach items="${article.commentsForEditors}" var="comment">
+			<p>${comment}</p>
+		</c:forEach>
+		<c:forEach items="${article.suggestion}" var="suggestion">
 			<p>${suggestion}</p>
 		</c:forEach>
 		<input type="button" value="Reject" id="reject">

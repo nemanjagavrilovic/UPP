@@ -10,3 +10,13 @@ function getFormFields() {
 	return data;
 	
 }
+
+$(document).on('click','#skip',function(){
+	$.ajax({
+		url:'../task/complete/'+$("#task").val(),
+		type:'POST',
+		success:function(response){
+			window.top.location = '../../../jsp/home.jsp';
+		}
+	})
+})

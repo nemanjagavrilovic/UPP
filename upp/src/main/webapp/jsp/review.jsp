@@ -14,6 +14,7 @@
 	
 	</head>
 	<body>
+	<c:import url="_navbar.jsp"></c:import>
 		<div id="content">
 		<input type="hidden" value="${task.taskId}">
 	
@@ -26,7 +27,7 @@
 	   <textarea rows="" cols="" id="comment_for_editor"></textarea>
 	   <textarea rows="" cols="" id="comment_for_author"></textarea>
 	   <input type="button" id="complete" value="Complete">
-	   <input type="hidden" value="${taks.taskId}">
+	   <input type="hidden" id="task" value="${task.taskId}">
 	</div>
 	</body>
 </html>

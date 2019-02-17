@@ -22,8 +22,8 @@ public class PDFHandler  {
 		try {
 			PDFParser parser = new PDFParser( new RandomAccessFile(file, "r"));
 			parser.parse();
-			//String text = getText(parser);
-			//retVal.setText(text);
+			String text = getText(parser);
+			retVal.setContent(text);
 
 			// metadata extraction
 			PDDocument pdf = parser.getPDDocument();
@@ -39,8 +39,7 @@ public class PDFHandler  {
 				newKeywords.add(s.trim());
 			}
 			retVal.setKeywords(newKeywords);
-			
-			retVal.setFilename(file.getCanonicalPath());
+			retVal.setFilename(file.getName());
 			
 			
 			pdf.close();

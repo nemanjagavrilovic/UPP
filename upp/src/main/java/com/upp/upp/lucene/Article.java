@@ -52,7 +52,7 @@ public class Article {
 	@XmlElement(required = true)
 	protected String title;
 
-	@Column
+	@Column(columnDefinition="TEXT")
 	@XmlElement(required = true)
 	protected String content;
 
@@ -92,7 +92,11 @@ public class Article {
 	
 	@ElementCollection
 	@XmlElement(required = true)
-	protected List<String> comments;
+	protected List<String> commentsForEditors;
+	
+	@ElementCollection
+	@XmlElement(required = true)
+	protected List<String> commentsForAuthors;
 	
 	public String keywordsToString(){
 		String retVal = "";

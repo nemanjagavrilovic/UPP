@@ -13,6 +13,8 @@
 	src="${pageContext.request.contextPath}/js/createPlan.js"> </script>
 	
 	</head>
+	<body>
+	<c:import url="_navbar.jsp"></c:import>
 	Magazines : <select id="planMagazine">
 		<c:forEach items="${magazines}" var="magazine">
 			<option value="${magazine.id}">${magazine.title}</option>

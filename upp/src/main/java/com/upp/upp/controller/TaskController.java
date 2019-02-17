@@ -159,6 +159,14 @@ public class TaskController {
 			return "redirect:/jsp/review.jsp";
 		} else if (task.getName().equals("Rework with reviewers comments")) {
 			return "redirect:/jsp/reworkWithReviewersComments.jsp";
+		} else if (task.getName().equals("Review rating")) {
+			return "redirect:/jsp/finalDecision.jsp";
+		} else if (task.getName().equals("Choose magazine")) {
+			return "redirect:/jsp/chooseMagazine.jsp";
+		} else if (task.getName().equals("Add new article")) {
+			return "redirect:/jsp/upload.jsp";
+		} else if (task.getName().equals("Add coauthor")) {
+			return "redirect:/jsp/addCoauthor.jsp";
 		}
 		return "redirect:/jsp/task.jsp";
 	}
@@ -166,12 +174,12 @@ public class TaskController {
 	@RequestMapping(path = "/tasks", produces = "application/json", method=RequestMethod.GET)
 	public String getUserTasks(HttpServletRequest request) {
 		String user = (String)request.getSession().getAttribute("loggedUser");
-
-		List<Task> tasks = taskService.createTaskQuery().taskAssignee(user).list();
-		List<Task> candidate = taskService.createTaskQuery().taskCandidateUser(user).list();
-		request.getSession().setAttribute("tasks", taskToTaskDtoConverter.convertList(tasks));
-		request.getSession().setAttribute("candidate", taskToTaskDtoConverter.convertList(candidate));
-		
+		if(user != null ) {
+			List<Task> tasks = taskService.createTaskQuery().taskAssignee(user).list();
+			List<Task> candidate = taskService.createTaskQuery().taskCandidateUser(user).list();
+			request.getSession().setAttribute("tasks", taskToTaskDtoConverter.convertList(tasks));
+			request.getSession().setAttribute("candidate", taskToTaskDtoConverter.convertList(candidate));
+		}
 		return "redirect:/jsp/home.jsp";
 	}
 	

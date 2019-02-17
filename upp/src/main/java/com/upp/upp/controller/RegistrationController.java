@@ -50,4 +50,9 @@ public class RegistrationController {
 		request.getSession().setAttribute("formFields", properties);
 		return new FormFieldsDto(task.getId(), pi.getId(), properties);
 	}
+	@RequestMapping(value="/logout", method=RequestMethod.GET)
+	public String logout(HttpServletRequest request){
+		request.getSession().invalidate();
+		return "forward:/jsp/login.jsp";
+	}
 }

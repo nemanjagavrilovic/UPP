@@ -18,6 +18,7 @@
 <title>Insert title here</title>
 </head>
 <body>
+<c:import url="_navbar.jsp"></c:import>
 	<select id="byDistance">
 		<c:forEach items="${byDistance}" var="reviewer">
 			<option value="${reviewer.email}">${reviewer.firstName}&nbsp ${reviewer.lastName}</option>

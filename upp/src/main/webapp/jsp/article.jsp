@@ -13,7 +13,7 @@
 	src="${pageContext.request.contextPath}/js/article.js"> </script>
 	</head>
 	<body>
-		
+		<c:import url="_navbar.jsp"></c:import>
 		<div id="content">
 		<table>
 			<tr>

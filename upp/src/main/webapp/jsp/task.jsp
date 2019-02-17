@@ -13,6 +13,7 @@
 	src="${pageContext.request.contextPath}/js/jquery.min.js"> </script>
 	</head>
 	<body>
+	<c:import url="_navbar.jsp"></c:import>
 		<div id="content">
 		
 		<c:forEach var="field" items="${formFields}" varStatus="loop">

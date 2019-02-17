@@ -15,6 +15,7 @@
 	src="${pageContext.request.contextPath}/js/generateFormFields.js"> </script>
 	</head>
 	<body>
+	<c:import url="_navbar.jsp"></c:import>
 		<div id="content">
 		Title : ${article.title}
 		Abstract : ${article.abstracts}

@@ -13,6 +13,7 @@
 	
 	</head>
 	<body>
+	<c:import url="_navbar.jsp"></c:import>
 		<div id="content">
 		<ul>
 			<c:forEach var="magazine" items="${magazines}" varStatus="loop">

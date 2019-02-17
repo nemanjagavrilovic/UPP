@@ -89,9 +89,16 @@ public class ArticleController {
 		RestTemplate client = new RestTemplate();
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
+		String fileName = "";
+		try {
+			 fileName = saveUploadedFile(article.getFile(),article.getFilename());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		FormSubmissionDto title = new FormSubmissionDto("title",article.getTitle());
 		FormSubmissionDto abstracts = new FormSubmissionDto("abstracts",article.getAbstracts());
-		FormSubmissionDto filename = new FormSubmissionDto("filename",article.getFilename());
+		FormSubmissionDto filename = new FormSubmissionDto("filename",fileName);
 		
 		List<FormSubmissionDto> list = new ArrayList<>();
 		list.add(title);
@@ -106,12 +113,7 @@ public class ArticleController {
 		request.getSession().setAttribute("formFields", properties);
 		request.getSession().setAttribute("task", new TaskDto(task.getId(), task.getName(), task.getAssignee()));
 		
-		try {
-			String fileName = saveUploadedFile(article.getFile(),article.getFilename());
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
 		return new ResponseEntity<Article>(article,HttpStatus.OK);
 	}
 	
@@ -124,6 +126,7 @@ public class ArticleController {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		FormSubmissionDto filename = new FormSubmissionDto("filename",article.getFilename());
+		FormSubmissionDto whatIDid = model.getDto();
 		try {
 			String fileName = saveUploadedFile(article.getFile(),article.getFilename());
 		} catch (IOException e) {
@@ -132,6 +135,9 @@ public class ArticleController {
 		}
 		List<FormSubmissionDto> list = new ArrayList<>();
 		list.add(filename);
+		if(whatIDid != null && whatIDid.getFieldValue() != "") {
+			list.add(filename);
+		}
 		HttpEntity<List<FormSubmissionDto>> entity = new HttpEntity<List<FormSubmissionDto>>(list, headers);
 		TaskDto response = client.postForObject("http://localhost:8081/task/post/"+taskId+"/rework", entity,
 				TaskDto.class);

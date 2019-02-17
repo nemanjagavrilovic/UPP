@@ -51,11 +51,14 @@ public class AddArticle implements ExecutionListener{
 		Optional<Magazine> magazine = magazineRepository.findById(Long.parseLong(chooseMagazine));
 		String file = "";
 		String filename = "";
+		String abstracts = "";
 		for(FormSubmissionDto dto : articleForm) {
 			if(dto.getFieldId().equals("file")) {
 				file= dto.getFieldValue();
 			} else if(dto.getFieldId().equals("filename")) {
 				filename = dto.getFieldValue();
+			} else if(dto.getFieldId().equals("abstracts")) {
+				abstracts = dto.getFieldValue();
 			}
 		}
 		User user = userRepository.findByEmail(logged.getEmail());
@@ -64,11 +67,12 @@ public class AddArticle implements ExecutionListener{
 		}
 		Article article = pdfHandler.getIndexUnit(new File(filename));
 		article.getAuthors().add(user);
+		article.setAbstracts(abstracts);
 		article.setMagazine(magazine.get());
 		article.setMagazineName(magazine.get().getTitle());
 		article.setScientificField(magazine.get().getScientificField());
-		article.setFilename(filename);
-		article = articleRepository.save(article);
+		articleRepository.save(article);
+		article.setContent("");
 		execution.setVariable("article", article);
 		execution.setVariable("articleFile", new File(article.getFilename()));
 	}

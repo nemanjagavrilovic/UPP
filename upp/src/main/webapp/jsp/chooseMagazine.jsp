@@ -13,6 +13,7 @@
 	src="${pageContext.request.contextPath}/js/chooseMagazine.js"> </script>
 	
 	</head>
+	<c:import url="_navbar.jsp"></c:import>
 	<body>
 	
 		<div id="content">

@@ -13,6 +13,7 @@
 	src="${pageContext.request.contextPath}/js/search.js"></script>
 	</head>
 	<body>
+	<c:import url="_navbar.jsp"></c:import>
 		Search repository:
 		<table id="simpleSearch" style="display:block;">
 			<tr>

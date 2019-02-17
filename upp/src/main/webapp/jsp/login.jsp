@@ -17,6 +17,7 @@
 	
 	</head>
 	<body>
+	<c:import url="_navbar.jsp"></c:import>
 		<div id="content">
 			Username:<input type="text" id="username">
 			Password:<input type="password" id="password">

@@ -1,9 +1,9 @@
 package com.upp.upp.lucene;
 
-import java.io.File;
 import java.io.Serializable;
 import java.util.List;
-import com.upp.upp.lucene.User;
+
+import com.upp.upp.model.FormSubmissionDto;
 public class UploadModel implements Serializable{
 
 	
@@ -27,6 +27,7 @@ public class UploadModel implements Serializable{
 	
 	protected String file;
 
+	protected FormSubmissionDto dto;
 	
 	public UploadModel() {
 		super();
@@ -125,6 +126,14 @@ public class UploadModel implements Serializable{
 
 	public void setFile(String file) {
 		this.file = file;
+	}
+
+	public FormSubmissionDto getDto() {
+		return dto;
+	}
+
+	public void setDto(FormSubmissionDto dto) {
+		this.dto = dto;
 	}
 
 	

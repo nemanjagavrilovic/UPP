@@ -14,6 +14,7 @@
 	
 	</head>
 	<body>
+	<c:import url="_navbar.jsp"></c:import>
 		<input type="hidden" id="magazineId" value="${paypalPlan.payPalId}">
 		<a onclick="subscribe()">Subscribe</a>
 		<a onclick="buy()">Buy magazine</a>

@@ -18,8 +18,8 @@
 <title>Insert title here</title>
 </head>
 <body>
-	Title<input type='text' id='title'>
-	Abstract<input type='text' id='abstract'>
+<c:import url="_navbar.jsp"></c:import>
+	Abstract:<input type='text' id='abstract'>
 	<input type='file'  onchange='openFile(event)'><br>
 	<input type="button" value="Submit" id="btnSubmit" />
 	<input type="hidden" id="task" value="${task.taskId}">

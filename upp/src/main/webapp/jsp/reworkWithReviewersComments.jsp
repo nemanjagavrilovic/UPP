@@ -18,7 +18,8 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<c:forEach items="${article.comments}" var="comment">
+<c:import url="_navbar.jsp"></c:import>
+	<c:forEach items="${article.commentsForAuthors}" var="comment">
 		<p>comment</p><br/>
 	</c:forEach>
 	<input type='file'  onchange='openFile(event)'><br>

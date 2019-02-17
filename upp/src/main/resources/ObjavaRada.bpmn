@@ -226,6 +226,7 @@
     <bpmn:userTask id="UserTask_1e62r0z" name="Reviewing" camunda:candidateUsers="${candidateUsers}">
       <bpmn:extensionElements>
         <camunda:taskListener class="com.upp.upp.camundaService.CandidateUsersAsignee" event="create" />
+        <camunda:executionListener class="com.upp.upp.camundaListeners.Review" event="end" />
       </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_1b1jeeg</bpmn:incoming>
       <bpmn:incoming>SequenceFlow_1b43qnw</bpmn:incoming>
@@ -276,6 +277,9 @@
       <bpmn:outgoing>SequenceFlow_0aftsd2</bpmn:outgoing>
     </bpmn:sendTask>
     <bpmn:userTask id="UserTask_0jlwm5n" name="Rework with reviewers comments" camunda:assignee="${loggedUser}">
+      <bpmn:extensionElements>
+        <camunda:executionListener class="com.upp.upp.camundaListeners.ReworkArticle" event="end" />
+      </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_0aftsd2</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_092uxvb</bpmn:outgoing>
     </bpmn:userTask>

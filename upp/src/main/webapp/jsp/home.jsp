@@ -13,6 +13,7 @@
 	src="${pageContext.request.contextPath}/js/jquery.min.js"> </script>
 	</head>
 	<body>
+	<c:import url="_navbar.jsp"></c:import>
 		<a href="../paypalPlan/">Create subscription plan</a>
 		<a href="../jsp/search.jsp">Search</a>
 		

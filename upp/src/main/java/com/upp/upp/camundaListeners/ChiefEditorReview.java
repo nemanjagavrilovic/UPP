@@ -31,7 +31,7 @@ public class ChiefEditorReview implements ExecutionListener{
 			}
 		}
 		Optional<Article> articleFromDatabase = articleRepository.findById(article.getId());
-		articleFromDatabase.get().getComments().add(comment);
+		articleFromDatabase.get().getCommentsForAuthors().add(comment);
 		article = articleRepository.save(articleFromDatabase.get());
 		execution.setVariable("article", article);
 	}

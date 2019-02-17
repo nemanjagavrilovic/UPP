@@ -17,6 +17,7 @@ $(document).on('click','input[type="button"]',function(){
 		url:'../task/post/'+$("#task").val()+'/finalDecision',
 		type:'POST',
 		contentType : 'application/json',
+		async: false,
 		data: JSON.stringify(data),
 		success: function(response) {
 			alert("Answer accepted");
