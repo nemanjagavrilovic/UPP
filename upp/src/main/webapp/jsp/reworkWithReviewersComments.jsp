@@ -13,18 +13,28 @@
 	<script type="text/javascript"
 	src="${pageContext.request.contextPath}/js/jquery.min.js"> </script>
 	<script type="text/javascript"
-	src="${pageContext.request.contextPath}/js/reworkWithComments.js"> </script>
+	src="${pageContext.request.contextPath}/js/rework.js"> </script>
 	</head>
 <title>Insert title here</title>
 </head>
 <body>
-<c:import url="_navbar.jsp"></c:import>
-	<c:forEach items="${article.commentsForAuthors}" var="comment">
-		<p>comment</p><br/>
-	</c:forEach>
-	<input type='file'  onchange='openFile(event)'><br>
-	<textarea id="whatIdid"></textarea>
-	<input type="button" value="Submit" id="btnSubmit" />
-	<input type="hidden" id="task" value="${task.taskId}">
+	<c:import url="_navbar.jsp"></c:import>
+	<c:if test="${empty loggedUser }">
+		<c:redirect url="/jsp/login.jsp"/>
+	</c:if>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-6">
+				<c:forEach items="${article.commentsForAuthors}" var="comment">
+					<label>comment</label><br/>
+				</c:forEach>
+				<input type='file'  onchange='openFile(event)'><br>
+				<input type="button" class="btn btn-primary" value="Submit" id="btnSubmit" />
+				<input type="hidden" id="task" value="${task.taskId}">
+			</div>
+		
+		</div>
+	</div>
+
 </body>
 </html>

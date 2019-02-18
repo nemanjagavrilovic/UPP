@@ -42,6 +42,7 @@ public class LoginController {
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	private ResponseEntity<CamundaUser> login (HttpServletRequest request, @RequestBody CamundaUser user) {
 		CamundaUser loggedUser = userService.findByUsernameAndPassword(user.getUsername(), user.getPassword());
+		//proveriti i za identityService usera
 		Authentication currentAuthentication = null;
 		
 		if(loggedUser != null) {

@@ -9,6 +9,11 @@
         <camunda:formData>
           <camunda:formField id="username" label="Username" type="string" />
           <camunda:formField id="password" label="Password" type="string" />
+          <camunda:formField id="email" label="Email" type="string" />
+          <camunda:formField id="city" label="City" type="string" />
+          <camunda:formField id="country" label="Country" type="string" />
+          <camunda:formField id="firstName" label="First name" type="string" />
+          <camunda:formField id="lastName" label="Last name" type="string" />
         </camunda:formData>
       </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_1b5q4pi</bpmn:incoming>

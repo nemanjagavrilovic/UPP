@@ -2,12 +2,14 @@ package com.upp.upp.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.camunda.bpm.engine.FormService;
+import org.camunda.bpm.engine.RuntimeService;
 import org.camunda.bpm.engine.TaskService;
 import org.camunda.bpm.engine.form.FormField;
 import org.camunda.bpm.engine.form.TaskFormData;
@@ -52,6 +54,9 @@ public class MagazineController {
 	private PayPalPlanService paypalPlanService;
 	
 	@Autowired
+	private RuntimeService runtimeService;
+	
+	@Autowired
 	private RestTemplate restTemplate;
 	
 	@RequestMapping(value = "/", method=RequestMethod.GET)
@@ -70,7 +75,7 @@ public class MagazineController {
 		return "redirect:/jsp/allMagazines.jsp";
 	}
 	@RequestMapping(value = "/chooseMagazine/{id}/{task}", method=RequestMethod.GET)
-	public  RedirectView  chooseMagazine(HttpServletRequest request, @PathVariable ("id") Long id,@PathVariable ("task") String taskId) {
+	public  ResponseEntity<String>  chooseMagazine(HttpServletResponse httpServletResponse,HttpServletRequest request, @PathVariable ("id") Long id,@PathVariable ("task") String taskId) {
 		RestTemplate client = new RestTemplate();
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
@@ -85,8 +90,12 @@ public class MagazineController {
 		List<FormField> properties = tfd.getFormFields();
 		request.getSession().setAttribute("formFields", properties);
 		request.getSession().setAttribute("task", new TaskDto(task.getId(), task.getName(), task.getAssignee()));
+		if(task.getName().equals("Subscribe")) {
+			String url = (String)runtimeService.getVariable(task.getProcessInstanceId(),"redirectURL");
+			return new ResponseEntity<String>(url,HttpStatus.OK);
+		}
+		return new ResponseEntity<String>("../../../jsp/upload.jsp",HttpStatus.OK);
 		
-		return new RedirectView("/jsp/upload.jsp");
 	}
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Optional<Magazine>> findById(@PathVariable ("id") Long id) {
@@ -106,5 +115,17 @@ public class MagazineController {
 		String url = restTemplate.postForObject("https://localhost:1234/koncentrator/order/create", order, String.class);
 	    return new ResponseEntity<String>(url,HttpStatus.OK);
 	}
+	
+	@RequestMapping(value = "/makePlan/{id}" , method = RequestMethod.POST)
+	public ResponseEntity<?> makePlan(@PathVariable ("id") Long magazineId,
+									@RequestBody PayPalPlan plan){
+		Optional<Magazine> magazine = magazineService.findById(magazineId);
+		plan.setMagazineId(magazine.get().getId());
+		plan.setPlanName(magazine.get().getTitle());
+		Map<String,Object> response = restTemplate.postForObject("https://localhost:9001/paypal/makePlan", plan, Map.class);
+		PayPalPlan saved = paypalPlanService.save(plan);
+		return new ResponseEntity<>(saved,HttpStatus.OK);
+	}
+	
 	
 }

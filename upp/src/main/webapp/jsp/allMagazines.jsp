@@ -14,14 +14,16 @@
 	</head>
 	<body>
 	<c:import url="_navbar.jsp"></c:import>
-		<div id="content">
-		<ul>
-			<c:forEach var="magazine" items="${magazines}" varStatus="loop">
-				<li>
-					<a href="../magazines/magazine/${magazine.id}" id="magazine">${magazine.title}</a>
-				</li>
-			</c:forEach>
-		</ul>
+		<div id="content" class="container">
+			<div class="row">
+			<ul style="list-style-type:none;">
+				<c:forEach var="magazine" items="${magazines}" varStatus="loop">
+					<li>
+						<a href="../magazines/magazine/${magazine.id}" id="magazine">${magazine.title}</a>
+					</li>
+				</c:forEach>
+			</ul>
+			</div>
 		</div>
 	</body>
 </html>

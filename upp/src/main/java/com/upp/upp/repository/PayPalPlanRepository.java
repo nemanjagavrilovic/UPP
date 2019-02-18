@@ -9,4 +9,6 @@ import com.upp.upp.model.PayPalPlan;
 public interface PayPalPlanRepository extends JpaRepository<PayPalPlan,Long> {
 
 	public PayPalPlan findByMagazineId(Long id);
+	public PayPalPlan findByPlanName(String name);
+	
 }

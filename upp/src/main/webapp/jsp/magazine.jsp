@@ -15,13 +15,25 @@
 	</head>
 	<body>
 	<c:import url="_navbar.jsp"></c:import>
-		<input type="hidden" id="magazineId" value="${paypalPlan.payPalId}">
-		<a onclick="subscribe()">Subscribe</a>
-		<a onclick="buy()">Buy magazine</a>
-		<input type="hidden" id="issn" value="${magazine.issn}">
-		
-		<c:forEach items="${magazine.articles}" var="article">
-			<a href='../articles/${article.id}'>${article.title }</a>
-		</c:forEach>
+	<div class="container">
+		<div class="row">
+			<input type="hidden" id="magazineId" value="${paypalPlan.payPalId}">
+			<a class="btn btn-danger" onclick="subscribe()">Subscribe</a>
+			<a class="btn btn-info" onclick="buy()">Buy magazine</a>
+			<div class="col-md-6">
+				<input type="hidden" id="issn" value="${magazine.issn}">
+				<label>Magazine articles:</label>
+				<ul style="list-style-type:none;">
+				<c:forEach items="${magazine.articles}" var="article">
+					<c:if test="${article.saved == true}">
+						<li>
+							<a href='../articles/${article.id}'>${article.title }</a>
+						</li>
+					</c:if>
+				</c:forEach>
+				</ul>
+			</div>
+		</div>
+	</div>
 	</body>
 </html>

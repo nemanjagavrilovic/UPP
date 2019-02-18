@@ -14,17 +14,26 @@
 	</head>
 	<body>
 		<c:import url="_navbar.jsp"></c:import>
-		<div id="content">
-		<table>
-			<tr>
-				<td>
-					<h1>${article.title}</h1>
-				</td>
-				<td>
-					<a onclick="buy()">Buy article</a>
-				</td>
-			</tr>
-		</table>
+		<div id="content" class="container">
+			<div class="row">
+				<div class="col-md-7">
+					<table class="table-responsive">
+						<tr>
+							<td>
+								<h1>${article.title}</h1>
+							</td>
+							<td>
+								<a onclick="buy()">Buy article</a>
+							</td>
+						</tr>
+						<tr >
+							<td colspan="2">
+								<pre>${article.content}</pre>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
 		</div>
 	</body>
 	<input type="hidden" id="issn" value="${article.magazine.issn }">

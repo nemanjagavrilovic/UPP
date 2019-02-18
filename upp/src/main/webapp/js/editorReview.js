@@ -1,5 +1,4 @@
 $(document).on('click','input[type="button"]',function(){
-	alert($(this).attr('id'));
 	var answer=0;
 	var id = $(this).attr('id');
 	if(id == 'reject') {
@@ -18,6 +17,7 @@ $(document).on('click','input[type="button"]',function(){
 		type:'POST',
 		contentType : 'application/json',
 		data: JSON.stringify(data),
+		async:false,
 		success: function(response) {
 			alert("Answer accepted");
 		}

@@ -17,50 +17,8 @@ $(document).on('click',"#btnSubmit",function(e){
 	var data = JSON.stringify({
 		"file" : fileResult,
 		"filename" : fileName,
-		"scientificField" : "Medicina",
-		"abstracts" : $("#abstract").val(),
-		"magazineName" : "Lepota i zdravlje",
-		"authors" : [
-		         	{
-		 				"id" : "5",
-		 				"firstName" : "Lazar",
-		 				"lastName"  : "Lazarević",
-		 				"email" : "laza@gmail.com",
-		 				"age" : 55,
-		 				"lat" : 16.03,
-		 				"lon" : 75.32
-		 			},         
-			],
-		"reviewers" : [
-			 			
-			 			{
-			 				"id" : "3",
-			 				"firstName" : "Dragan",
-			 				"lastName"  : "Ivanović",
-			 				"email" : "dragan.ivanovic@gmail.com",
-			 				"age" : 35,
-			 				"lat" : 46.03,
-			 				"lon" : 130.32
-			 			},
-			 			{
-			 				"id" : "1",
-			 						"firstName" : "Nemanja",
-			 						"lastName"  : "Gavrilović",
-			 						"email" : "nemanja.gavrilovic1995@gmail.com",
-			 						"age" : 23,
-			 						"lat" : 43.03,
-			 						"lon" : 134.32
-			 				},
-			 				{
-			 					"id" : "4",
-			 					"firstName" : "Nikola",
-			 					"lastName"  : "Nikolić",
-			 					"email" : "nikola@gmail.com",
-			 					"age" : 19,
-			 					"lat" : 33.03,
-			 					"lon" : 124.32
-			 				}
-			 			]
+		"abstracts" : $("#abstract").val()
+		
 	})
 	$.ajax({
 		url:'../articles/rework/'+$("#task").val(),
@@ -68,6 +26,7 @@ $(document).on('click',"#btnSubmit",function(e){
 		enctype: 'multipart/form-data',
 		contentType:"application/json",
 		dataType:"json",
+		async:false,
 		data:data,
 		success:function(response){
 			window.top.location="../jsp/home.jsp";

@@ -62,17 +62,32 @@ public class TaskController {
 		Authentication currentAuthentication = null;
 		currentAuthentication = new Authentication(user,new ArrayList<String>());
 		identityService.setAuthentication(currentAuthentication);
-
 		ProcessInstance pi = runtimeService.startProcessInstanceByKey("Process_1");
-		Task task = taskService.createTaskQuery().processInstanceId(pi.getId()).list().get(0);
-		TaskFormData tfd = formService.getTaskFormData(task.getId());
-		List<FormField> properties = tfd.getFormFields();
-		for (FormField fp : properties) {
-			System.out.println(fp.getId() + fp.getType());
+		
+		if(taskService.createTaskQuery().processInstanceId(pi.getId()).list().size() > 0 ) {
+			
+			Task task = taskService.createTaskQuery().processInstanceId(pi.getId()).list().get(0);
+			TaskFormData tfd = formService.getTaskFormData(task.getId());
+			List<FormField> properties = tfd.getFormFields();
+			for (FormField fp : properties) {
+				System.out.println(fp.getId() + fp.getType());
+			}
+			request.getSession().setAttribute("task", new TaskDto(task.getId(), task.getName(), task.getAssignee()));
+			request.getSession().setAttribute("magazines", magazineService.findAll());
+			return "redirect:/jsp/chooseMagazine.jsp";
+		} else {
+			ProcessInstance process = runtimeService.startProcessInstanceByKey("registration");
+			Task task = taskService.createTaskQuery().processInstanceId(process.getId()).list().get(0);
+			TaskFormData tfd = formService.getTaskFormData(task.getId());
+			List<FormField> properties = tfd.getFormFields();
+			for (FormField fp : properties) {
+				System.out.println(fp.getId() + fp.getType());
+			}
+			request.getSession().setAttribute("task", new TaskDto(task.getId(), task.getName(), task.getAssignee()));
+			request.getSession().setAttribute("magazines", magazineService.findAll());
+			return "redirect:/jsp/registration.jsp";
+
 		}
-		request.getSession().setAttribute("task", new TaskDto(task.getId(), task.getName(), task.getAssignee()));
-		request.getSession().setAttribute("magazines", magazineService.findAll());
-		return "redirect:/jsp/chooseMagazine.jsp";
 	}
 	@PostMapping(path = "/complete/{taskId}", produces = "application/json")
 	public @ResponseBody ResponseEntity<List<TaskDto>> complete(@PathVariable String taskId) {
@@ -88,7 +103,7 @@ public class TaskController {
 	}
 
 	@PostMapping(path = "/post/{taskId}/{form}", produces = "application/json")
-	public @ResponseBody ResponseEntity post(@RequestBody List<FormSubmissionDto> dto, @PathVariable String taskId,
+	public ResponseEntity<TaskDto> post(@RequestBody List<FormSubmissionDto> dto, @PathVariable String taskId,
 			@PathVariable("form") String form) {
 		HashMap<String, Object> map = this.mapListToDto(dto);
 
@@ -128,7 +143,6 @@ public class TaskController {
 		task.setAssignee(user);
 		taskService.saveTask(task);
 		return "redirect:/jsp/home.jsp";
-		
 	}
 	//Get task
 	@RequestMapping(path = "/{taskId}", produces = "application/json", method=RequestMethod.GET)

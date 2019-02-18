@@ -18,10 +18,22 @@
 <title>Insert title here</title>
 </head>
 <body>
-<c:import url="_navbar.jsp"></c:import>
-	Abstract:<input type='text' id='abstract'>
-	<input type='file'  onchange='openFile(event)'><br>
-	<input type="button" value="Submit" id="btnSubmit" />
-	<input type="hidden" id="task" value="${task.taskId}">
+	<c:import url="_navbar.jsp"></c:import>
+	<c:if test="${empty loggedUser }">
+		<c:redirect url="/jsp/login.jsp"/>
+	</c:if>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-6">		
+                <div class="form-group">
+                	<label>Abstract:</label>
+                	<input class="form-control" type="text" id="abstract">
+                </div>
+                <input type="file" onchange="openFile(event)"><br>
+                <input type="button" class="btn btn-primary" value="Submit" id="btnSubmit">
+                <input type="hidden" id="task" value="${task.taskId}">
+    		</div>
+		</div>
+	</div>
 </body>
 </html>

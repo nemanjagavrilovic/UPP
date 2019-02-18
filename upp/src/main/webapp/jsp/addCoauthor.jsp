@@ -16,32 +16,47 @@
 	</head>
 	<body>
 	<c:import url="_navbar.jsp"></c:import>
-		<div id="content">
-		
-		<c:forEach var="field" items="${formFields}" varStatus="loop">
-				<c:choose>
-				    <c:when test="${field.type.name == 'string'}">
-				    	<c:choose>
-				    		<c:when test="${field.id == 'password'}">
-		 						${field.label}<input type="password" id="${field.id}"><br/>
-				    		</c:when>
-				    		<c:otherwise>
-		    					${field.label}<input type="text" id="${field.id}"><br/>
-				    		</c:otherwise>
-				    	</c:choose>
-				        <br />
-				    </c:when>
-				    <c:when test="${field.type.name == 'boolean'}">
-	    				${field.label}<input type="checkbox" id="${field.id}"><br/>
-				    </c:when>    
-				    <c:otherwise>
-				      <br />
-				    </c:otherwise>
-				</c:choose>
-			</c:forEach>
-			<input type="button" value="Add" id="add">
-			<input type="button" value="Skip" id="skip">
-			<input type="hidden" id="task" value="${task.taskId}">
+	<c:if test="${empty loggedUser }">
+		<c:redirect url="/jsp/login.jsp"/>
+	</c:if>
+		<div id="content" class="container">
+			<div class="row">
+				<div class="col-md-6 text-center">
+					<c:forEach var="field" items="${formFields}" varStatus="loop">
+							<c:choose>
+							    <c:when test="${field.type.name == 'string'}">
+							    	<c:choose>
+							    		<c:when test="${field.id == 'password'}">
+							    			<div class="form-group">
+					 							<label>${field.label}</label>
+					 							<input type="password" class="form-control" id="${field.id}"><br/>
+					 						</div>
+							    		</c:when>
+							    		<c:otherwise>
+							    			<div class="form-group">
+					    						<label>${field.label}</label>
+					    						<input class="form-control" type="text" id="${field.id}"><br/>
+					    					</div>
+							    		</c:otherwise>
+							    	</c:choose>
+							        <br />
+							    </c:when>
+							    <c:when test="${field.type.name == 'boolean'}">
+							    	<div>
+				    					<label>	${field.label}</label>
+				    					<input type="checkbox"  id="${field.id}"><br/>
+				    				</div>
+							    </c:when>    
+							    <c:otherwise>
+							      <br />
+							    </c:otherwise>
+							</c:choose>
+						</c:forEach>
+						<input class="btn btn-primary" type="button" value="Add" id="add">
+						<input class="btn btn-primary" type="button" value="Skip" id="skip">
+						<input class="btn btn-primary" type="hidden" id="task" value="${task.taskId}">
+					</div>
+				</div>
 		</div>
 	</body>
 	<script type="text/javascript">

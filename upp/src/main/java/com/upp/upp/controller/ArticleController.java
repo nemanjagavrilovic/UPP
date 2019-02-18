@@ -125,14 +125,16 @@ public class ArticleController {
 		RestTemplate client = new RestTemplate();
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
-		FormSubmissionDto filename = new FormSubmissionDto("filename",article.getFilename());
-		FormSubmissionDto whatIDid = model.getDto();
+		String fileName = "";
 		try {
-			String fileName = saveUploadedFile(article.getFile(),article.getFilename());
+			 fileName = saveUploadedFile(article.getFile(),article.getFilename());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		FormSubmissionDto filename = new FormSubmissionDto("filename",fileName);
+		FormSubmissionDto whatIDid = model.getDto();
+		
 		List<FormSubmissionDto> list = new ArrayList<>();
 		list.add(filename);
 		if(whatIDid != null && whatIDid.getFieldValue() != "") {

@@ -22,6 +22,7 @@ public class ArticleToArticleTransport implements Converter<Article,ArticleTrans
 		article.setScientificField(source.getScientificField());
 		article.setTitle(source.getTitle());
 		article.setFile(source.getFile());
+		article.setContent(source.getContent());
 		return article;
 	}
 

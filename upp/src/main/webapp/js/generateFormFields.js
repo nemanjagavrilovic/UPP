@@ -1,12 +1,12 @@
-//function getFormFields(formFields) {
-//	var data = new Array();
-//	formFields.forEach(element => {
-//		data.push({fieldId : element.id, fieldValue : $("#"+element.id).val()});
-//	});
-//	
-//	return data;
-//	
-//}
+function getFormFields(formFields) {
+	var data = new Array();
+	formFields.forEach(element => {
+		data.push({fieldId : element.id, fieldValue : $("#"+element.id).val()});
+	});
+	
+	return data;
+	
+}
 function generateForm (fields,div) {
 
 	for(i=0; i<fields.length; i++) {

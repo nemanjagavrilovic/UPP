@@ -22,13 +22,13 @@ public class NotifyAuthorRework implements JavaDelegate{
 	@Override
 	public void execute(DelegateExecution execution) throws Exception {
 		// TODO Auto-generated method stub
-		String username = (String) execution.getVariable("loggedUser");
-		CamundaUser user = userRepository.findByUsername(username);
-		Article article = (Article) execution.getVariable("article");
-		emailService.getMail().setTo(user.getEmail());
-		emailService.getMail().setSubject("Request for publication"+article.getTitle());
-		emailService.getMail().setText("Rework your publication request");
-		emailService.sendNotificaitionAsync(user);
+//		String username = (String) execution.getVariable("loggedUser");
+//		CamundaUser user = userRepository.findByUsername(username);
+//		Article article = (Article) execution.getVariable("article");
+//		emailService.getMail().setTo(user.getEmail());
+//		emailService.getMail().setSubject("Request for publication"+article.getTitle());
+//		emailService.getMail().setText("Rework your publication request");
+//		emailService.sendNotificaitionAsync(user);
 		
 	}
 	

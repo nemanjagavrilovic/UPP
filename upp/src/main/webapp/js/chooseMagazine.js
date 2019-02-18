@@ -7,8 +7,10 @@ $(document).on('click',"#magazine", function(e) {
 	$.ajax({
 		url : href,
 		type : 'GET',
+		async: false,
 		success:function(response){
-			window.top.location = '../../../jsp/upload.jsp';
+			
+			window.top.location = response;
 		}
 		
 	})

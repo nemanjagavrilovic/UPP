@@ -14,27 +14,39 @@
 	</head>
 	<body>
 	<c:import url="_navbar.jsp"></c:import>
-		<a href="../paypalPlan/">Create subscription plan</a>
-		<a href="../jsp/search.jsp">Search</a>
-		
-		<div id="content">
-			<ul>
-				<c:forEach var="task" items="${tasks}" varStatus="loop">
-					<li>
-						<a href="../../task/${task.taskId}">${task.name}</a>
-					</li>
-				</c:forEach>
-			</ul>
-			<ul>
-				<c:forEach var="task" items="${candidate}" varStatus="loop">
-					<li>
-						<a href="../../task/${task.taskId}">${task.name}</a>
-						<a href="../../task/claim/${task.taskId}">Claim</a>
-						
-					</li>
-				</c:forEach>
-			</ul>
+		<a class="btn btn-primary" href="../paypalPlan/">Create subscription plan</a>
+		<a class="btn btn-primary" href="../jsp/search.jsp">Search</a>
+		<a class="btn btn-primary" href="../task/startProcess/">Add article</a>
+	
+		<div id="content" class="container">
+			<div class="row">
+				<div class="panel panel-default col-md-6">
+					<div class="panel-heading"><label>My tasks:</label><br></div>
+					<div class="panel-body">
+						<ul style="list-style-type:none;">
+						<c:forEach var="task" items="${tasks}" varStatus="loop">
+							<li>
+								<a href="../../task/${task.taskId}">${task.name}</a>
+							</li>
+						</c:forEach>
+						</ul>
+					</div>
+				</div>
+				<div class="panel panel-default col-md-6">
+					<div class="panel-heading"><label>Candidate tasks:</label><br></div>
+					<div class="panel-body">
+						<ul style="list-style-type:none;">
+							<c:forEach var="task" items="${candidate}" varStatus="loop">
+								<li>
+									<a href="../../task/${task.taskId}">${task.name}</a>
+									<a href="../../task/claim/${task.taskId}">Claim</a>
+									
+								</li>
+							</c:forEach>
+						</ul>
+					</div>
+				</div>		
+			</div>
 		</div>
-		<a href="../task/startProcess/">Add article</a>
 	</body>
 </html>

@@ -74,7 +74,7 @@ public class AddArticle implements ExecutionListener{
 		articleRepository.save(article);
 		article.setContent("");
 		execution.setVariable("article", article);
-		execution.setVariable("articleFile", new File(article.getFilename()));
+		execution.setVariable("articleFile", new File(filename));
 	}
 
 }

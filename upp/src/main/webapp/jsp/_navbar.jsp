@@ -35,7 +35,9 @@
              id="bs-example-navbar-collapse-1">
             <ul id="nav" class="nav navbar-nav">
                 <li><a href="/task/tasks">Home</a></li>
-                      </ul>
+                <li><a href="/magazines/all">Magazines</a></li>
+      
+            </ul>
             <ul class="nav navbar-nav navbar-right">
                 <c:if test="${empty loggedUser}">
                     <li><a href="/jsp/login.jsp" id="Login">Log in</a></li>

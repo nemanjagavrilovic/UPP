@@ -64,6 +64,19 @@ public class CamundaUser implements Serializable{
 		this.city = city;
 		this.email = email;
 	}
+
+
+	public CamundaUser(String username, String password, String firstName, String lastName, String country, String city,
+			String email) {
+		super();
+		this.username = username;
+		this.password = password;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.country = country;
+		this.city = city;
+		this.email = email;
+	}
 	
 	
 }

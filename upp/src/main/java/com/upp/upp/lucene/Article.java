@@ -87,6 +87,9 @@ public class Article {
 	protected String highlight;
 	
 	@XmlElement
+	protected boolean saved;
+	
+	@XmlElement
 	@ManyToOne(fetch = FetchType.EAGER)
 	protected Magazine magazine;
 	

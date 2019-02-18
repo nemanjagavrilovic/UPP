@@ -31,6 +31,7 @@ $(document).on('click',"#btnSubmit",function(e){
 		contentType:"application/json",
 		dataType:"json",
 		data:data,
+		async:false,
 		success:function(response){
 			window.top.location="../jsp/home.jsp";
 		}

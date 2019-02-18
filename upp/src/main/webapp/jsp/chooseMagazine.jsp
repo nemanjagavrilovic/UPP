@@ -14,16 +14,26 @@
 	
 	</head>
 	<c:import url="_navbar.jsp"></c:import>
+	<c:if test="${empty loggedUser }">
+		<c:redirect url="/jsp/login.jsp"/>
+	</c:if>
 	<body>
 	
-		<div id="content">
-		<ul>
-			<c:forEach var="magazine" items="${magazines}" varStatus="loop">
-				<li>
-					<a href="../magazines/chooseMagazine/${magazine.id}/${task.taskId}" id="magazine">${magazine.title}</a>
-				</li>
-			</c:forEach>
-		</ul>
+		<div id="content" class="container">
+			<div class="row">
+				<div class="panel panel-default col-md-6">
+					<div class="panel-heading"><label>Choose magazine:</label></div>
+					<div class="panel-body">
+						<ul style="list-style-type:none;">
+							<c:forEach var="magazine" items="${magazines}" varStatus="loop">
+								<li>
+									<a href="../magazines/chooseMagazine/${magazine.id}/${task.taskId}" id="magazine">${magazine.title}</a>
+								</li>
+							</c:forEach>
+						</ul>
+					</div>
+				</div>
+			</div>
 		</div>
 	</body>
 </html>

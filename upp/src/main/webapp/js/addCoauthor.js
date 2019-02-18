@@ -15,8 +15,9 @@ $(document).on('click','#skip',function(){
 	$.ajax({
 		url:'../task/complete/'+$("#task").val(),
 		type:'POST',
+		async:false,
 		success:function(response){
-			window.top.location = '../../../jsp/home.jsp';
+			window.top.location = '../../task/tasks';
 		}
 	})
 })

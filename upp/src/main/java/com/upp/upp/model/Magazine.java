@@ -14,6 +14,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.xml.bind.annotation.XmlTransient;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.upp.upp.lucene.Article;
 
 import lombok.Getter;
@@ -48,12 +49,16 @@ public class Magazine implements Serializable{
 	@Column
 	private String scientificField;
 	
+	@Column
+	private boolean openAccess;
+	
 	@ManyToOne
 	private CamundaUser editor;
 	
 	@ManyToOne
 	private CamundaUser scientificFieldEditor;
 	
+	@JsonIgnore
 	@XmlTransient
 	public List<Article> getArticles() {
 		return this.articles;

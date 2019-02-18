@@ -35,41 +35,38 @@
       <bpmn:startEvent id="StartEvent_0f1irgb">
         <bpmn:outgoing>SequenceFlow_1wiq0c8</bpmn:outgoing>
       </bpmn:startEvent>
-      <bpmn:sequenceFlow id="SequenceFlow_1wiq0c8" sourceRef="StartEvent_0f1irgb" targetRef="Task_1hn0cji" />
-      <bpmn:userTask id="Task_1hn0cji" name="Pay membership fees" camunda:assignee="${loggedUser}">
-        <bpmn:extensionElements>
-          <camunda:formData>
-            <camunda:formField id="username" label="Username" type="string" />
-            <camunda:formField id="password" label="Password" type="string" />
-          </camunda:formData>
-        </bpmn:extensionElements>
-        <bpmn:incoming>SequenceFlow_1wiq0c8</bpmn:incoming>
-        <bpmn:outgoing>SequenceFlow_1283r3i</bpmn:outgoing>
-      </bpmn:userTask>
-      <bpmn:sequenceFlow id="SequenceFlow_1283r3i" sourceRef="Task_1hn0cji" targetRef="Task_0ncuvtx" />
+      <bpmn:sequenceFlow id="SequenceFlow_1wiq0c8" sourceRef="StartEvent_0f1irgb" targetRef="Task_0ncuvtx" />
       <bpmn:serviceTask id="Task_0ncuvtx" name="Payment concentrator" camunda:class="com.upp.upp.camundaService.MembershipFee">
-        <bpmn:incoming>SequenceFlow_1283r3i</bpmn:incoming>
-        <bpmn:outgoing>SequenceFlow_1ik2aep</bpmn:outgoing>
+        <bpmn:incoming>SequenceFlow_1wiq0c8</bpmn:incoming>
+        <bpmn:outgoing>SequenceFlow_0sdr33b</bpmn:outgoing>
       </bpmn:serviceTask>
       <bpmn:exclusiveGateway id="ExclusiveGateway_12f38sj">
-        <bpmn:incoming>SequenceFlow_1ik2aep</bpmn:incoming>
+        <bpmn:incoming>SequenceFlow_183ihug</bpmn:incoming>
         <bpmn:outgoing>SequenceFlow_0fei6b5</bpmn:outgoing>
         <bpmn:outgoing>SequenceFlow_1yvw3tu</bpmn:outgoing>
       </bpmn:exclusiveGateway>
-      <bpmn:sequenceFlow id="SequenceFlow_1ik2aep" sourceRef="Task_0ncuvtx" targetRef="ExclusiveGateway_12f38sj" />
       <bpmn:endEvent id="EndEvent_0xc9stc">
         <bpmn:incoming>SequenceFlow_0fei6b5</bpmn:incoming>
       </bpmn:endEvent>
       <bpmn:sequenceFlow id="SequenceFlow_0fei6b5" sourceRef="ExclusiveGateway_12f38sj" targetRef="EndEvent_0xc9stc">
-        <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${paied == true}</bpmn:conditionExpression>
+        <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${paid== true}</bpmn:conditionExpression>
       </bpmn:sequenceFlow>
       <bpmn:sequenceFlow id="SequenceFlow_1yvw3tu" sourceRef="ExclusiveGateway_12f38sj" targetRef="EndEvent_07v7xro">
-        <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${paied == true}</bpmn:conditionExpression>
+        <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${paid== false}</bpmn:conditionExpression>
       </bpmn:sequenceFlow>
       <bpmn:endEvent id="EndEvent_07v7xro" name="NotPaid">
         <bpmn:incoming>SequenceFlow_1yvw3tu</bpmn:incoming>
         <bpmn:errorEventDefinition errorRef="Error_064qksu" />
       </bpmn:endEvent>
+      <bpmn:sequenceFlow id="SequenceFlow_0sdr33b" sourceRef="Task_0ncuvtx" targetRef="Task_00ak1bp" />
+      <bpmn:sequenceFlow id="SequenceFlow_183ihug" sourceRef="Task_00ak1bp" targetRef="ExclusiveGateway_12f38sj" />
+      <bpmn:userTask id="Task_00ak1bp" name="Subscribe" camunda:assignee="${loggedUser}">
+        <bpmn:extensionElements>
+          <camunda:executionListener class="com.upp.upp.camundaListeners.Subscribe" event="end" />
+        </bpmn:extensionElements>
+        <bpmn:incoming>SequenceFlow_0sdr33b</bpmn:incoming>
+        <bpmn:outgoing>SequenceFlow_183ihug</bpmn:outgoing>
+      </bpmn:userTask>
     </bpmn:subProcess>
     <bpmn:sequenceFlow id="SequenceFlow_11dl7oo" sourceRef="ExclusiveGateway_1mqzoa5" targetRef="SubProcess_0gbikpk">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${membershipFee == false }</bpmn:conditionExpression>
@@ -348,25 +345,14 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_1wiq0c8_di" bpmnElement="SequenceFlow_1wiq0c8">
         <di:waypoint x="935" y="185" />
-        <di:waypoint x="985" y="185" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="UserTask_1eweanr_di" bpmnElement="Task_1hn0cji">
-        <dc:Bounds x="985" y="145" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="SequenceFlow_1283r3i_di" bpmnElement="SequenceFlow_1283r3i">
-        <di:waypoint x="1085" y="185" />
-        <di:waypoint x="1135" y="185" />
+        <di:waypoint x="1012" y="185" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="ServiceTask_1g43uaw_di" bpmnElement="Task_0ncuvtx">
-        <dc:Bounds x="1135" y="145" width="100" height="80" />
+        <dc:Bounds x="1012" y="145" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="ExclusiveGateway_12f38sj_di" bpmnElement="ExclusiveGateway_12f38sj" isMarkerVisible="true">
         <dc:Bounds x="1285" y="160" width="50" height="50" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="SequenceFlow_1ik2aep_di" bpmnElement="SequenceFlow_1ik2aep">
-        <di:waypoint x="1235" y="185" />
-        <di:waypoint x="1285" y="185" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="EndEvent_0xc9stc_di" bpmnElement="EndEvent_0xc9stc">
         <dc:Bounds x="1385" y="167" width="36" height="36" />
       </bpmndi:BPMNShape>
@@ -645,6 +631,17 @@
         <di:waypoint x="3172" y="751" />
         <di:waypoint x="3064" y="829" />
       </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_0sdr33b_di" bpmnElement="SequenceFlow_0sdr33b">
+        <di:waypoint x="1112" y="185" />
+        <di:waypoint x="1154" y="185" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_183ihug_di" bpmnElement="SequenceFlow_183ihug">
+        <di:waypoint x="1254" y="185" />
+        <di:waypoint x="1285" y="185" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="UserTask_0w1lnum_di" bpmnElement="Task_00ak1bp">
+        <dc:Bounds x="1154" y="145" width="100" height="80" />
+      </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
 </bpmn:definitions>

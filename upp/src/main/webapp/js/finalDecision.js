@@ -1,5 +1,4 @@
 $(document).on('click','input[type="button"]',function(){
-	alert($(this).attr('id'));
 	var answer=0;
 	var id = $(this).attr('id');
 	if(id == 'reject') {

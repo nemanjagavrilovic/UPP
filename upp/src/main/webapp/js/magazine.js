@@ -1,7 +1,7 @@
 function subscribe(){
 	
 	$.ajax({
-		url:'http://localhost:9001/lb/acceptPlan/'+$("#magazineId").val(),
+		url:'http://localhost:9001/paypal/acceptPlan/'+$("#magazineId").val(),
 		type:'GET',
 		crossDomain: true,
         xhrFields: {

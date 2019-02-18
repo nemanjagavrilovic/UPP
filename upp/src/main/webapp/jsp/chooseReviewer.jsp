@@ -18,21 +18,38 @@
 <title>Insert title here</title>
 </head>
 <body>
-<c:import url="_navbar.jsp"></c:import>
-	<select id="byDistance">
-		<c:forEach items="${byDistance}" var="reviewer">
-			<option value="${reviewer.email}">${reviewer.firstName}&nbsp ${reviewer.lastName}</option>
-		</c:forEach>
-	</select>
-	<select id="moreLikeThis">
-		<c:forEach items="${moreLikeThis}" var="reviewer">
-			<option value="${reviewer.email}">${reviewer.firstName}&nbsp ${reviewer.lastName}</option>
-		</c:forEach>
-	</select>
-	<input type="button" value="Add" id="add">
-	<input type="button" value="Remove" id="remove">
-	<select id="chooseReviewer"></select>
-	<input type="button" value="Complete" id="complete">
-	<input type="hidden" id="task" value="${task.taskId}">
+	<c:import url="_navbar.jsp"></c:import>
+	<c:if test="${empty loggedUser }">
+		<c:redirect url="/jsp/login.jsp"/>
+	</c:if>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-5">
+				<select id="byDistance" style="width:200px;">
+					<option>/</option>
+					<c:forEach items="${byDistance}" var="reviewer">
+						<option value="${reviewer.email}">${reviewer.firstName}&nbsp ${reviewer.lastName}</option>
+					</c:forEach>
+				</select><br>
+				<select id="moreLikeThis" style="width:200px;">
+					<option>/</option>
+					<c:forEach items="${moreLikeThis}" var="reviewer">
+						<option value="${reviewer.email}">${reviewer.firstName}&nbsp ${reviewer.lastName}</option>
+					</c:forEach>
+				</select>
+			</div>
+			<div class="col-md-2">
+				<input class="btn btn-primary" type="button" value="Add" id="add"><br>
+				<input class="btn btn-danger" type="button" value="Remove" id="remove">
+			</div>
+			<div class="col-md-5" >
+				<select id="chooseReviewer"style="width:200px;"></select>
+			</div>
+			<input type="hidden" id="task" value="${task.taskId}">
+		</div>
+		<div class="row" style="margin-top:30px;">
+				<input type="button" class="btn btn-primary" value="Complete" id="complete">
+		</div>
+	</div>
 </body>
 </html>

@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.upp.upp.lucene.Article;
 import com.upp.upp.model.FormSubmissionDto;
-import com.upp.upp.model.Magazine;
+import com.upp.upp.pdf.PDFHandler;
 import com.upp.upp.repository.ArticleRepository;
 
 @Service
@@ -19,7 +19,10 @@ public class ReworkArticle implements ExecutionListener {
 
 	@Autowired
 	private ArticleRepository articleRepository;
-	
+
+	@Autowired
+	private PDFHandler pdfHandler;
+
 	@Override
 	public void notify(DelegateExecution execution) throws Exception {
 		// TODO Auto-generated method stub
@@ -32,11 +35,15 @@ public class ReworkArticle implements ExecutionListener {
 				filename = dto.getFieldValue();
 			}
 		}
+		Article newArticle = pdfHandler.getIndexUnit(new File(filename));
 		Optional<Article> articleFromDatabase = articleRepository.findById(article.getId());
-		articleFromDatabase.get().setFilename(filename);
+		articleFromDatabase.get().setFilename(newArticle.getFilename());
+		articleFromDatabase.get().setTitle(newArticle.getTitle());
+		articleFromDatabase.get().setKeywords(newArticle.getKeywords());
+		
 		article = articleRepository.save(articleFromDatabase.get());
 		execution.setVariable("article", article);
-		execution.setVariable("articleFile", new File(article.getFilename()));
+		execution.setVariable("articleFile", new File(newArticle.getFilename()));
 	}
 
 }
